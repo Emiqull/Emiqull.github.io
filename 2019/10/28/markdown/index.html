@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/HexoBlog/">
+            HexoBlog
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        Markdown语法规则
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-10-28
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="Markdown-语法规则"><a href="#Markdown-语法规则" class="headerlink" title="Markdown 语法规则"></a>Markdown 语法规则</h1><h2 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h2><hr>
+<p><a href="#title">标题</a><br><a href="#font">字体</a><br><a href="#link">链接</a><br><a href="#codes">代码高亮</a><br><a href="#image">图片</a><br><a href="#list">列表</a><br><a href="#escape">反编译</a><br><a href="#table">表格</a>  </p>
+<hr>
+<p><a name="title"></a></p>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><h3 id="书写规则"><a href="#书写规则" class="headerlink" title="书写规则"></a>书写规则</h3><p># 标题H1<br>## 标题H2<br>### 标题H3<br>#### 标题H4<br>##### 标题H5<br>###### 标题H5  </p>
+<h3 id="标题效果"><a href="#标题效果" class="headerlink" title="标题效果"></a>标题效果</h3><h1 id="标题H1"><a href="#标题H1" class="headerlink" title="标题H1"></a>标题H1</h1><h2 id="标题H2"><a href="#标题H2" class="headerlink" title="标题H2"></a>标题H2</h2><h3 id="标题H3"><a href="#标题H3" class="headerlink" title="标题H3"></a>标题H3</h3><h4 id="标题H4"><a href="#标题H4" class="headerlink" title="标题H4"></a>标题H4</h4><h5 id="标题H5"><a href="#标题H5" class="headerlink" title="标题H5"></a>标题H5</h5><h6 id="标题H5-1"><a href="#标题H5-1" class="headerlink" title="标题H5"></a>标题H5</h6><hr>
+<p><a name="font"></a></p>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><h3 id="书写规则-1"><a href="#书写规则-1" class="headerlink" title="书写规则"></a>书写规则</h3><p>~~删除线~~<br>*斜体字*<br>_斜体字_<br>**粗体**<br>__粗体__<br>***粗斜体***<br>___粗斜体___  </p>
+<h3 id="字体效果"><a href="#字体效果" class="headerlink" title="字体效果"></a>字体效果</h3><p><del>删除线</del><br><em>斜体字</em><br><em>斜体字</em><br><strong>粗体</strong><br><strong>粗体</strong><br><strong><em>粗斜体</em></strong><br><strong><em>粗斜体</em></strong>  </p>
+<hr>
+<p><a name="link"></a></p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><h3 id="书写规则-2"><a href="#书写规则-2" class="headerlink" title="书写规则"></a>书写规则</h3><p>[普通链接](<a href="https://github.com/Emiqull/" target="_blank" rel="noopener">https://github.com/Emiqull/</a>)<br>[普通链接带标题](<a href="https://github.com/Emiqull/" target="_blank" rel="noopener">https://github.com/Emiqull/</a> “这是标题”)<br>直接链接：<a href="https://github.com/Emiqull" target="_blank" rel="noopener">https://github.com/Emiqull</a>  </p>
+<h3 id="链接效果"><a href="#链接效果" class="headerlink" title="链接效果"></a>链接效果</h3><p><a href="https://github.com/Emiqull/" target="_blank" rel="noopener">普通链接</a><br><a href="https://github.com/Emiqull/" target="_blank" rel="noopener" title="鼠标悬停显示标题">普通链接带标题</a><br>直接链接：<a href="https://github.com/Emiqull" target="_blank" rel="noopener">https://github.com/Emiqull</a>  </p>
+<hr>
+<p><a name="codes"></a></p>
+<h2 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h2><h3 id="书写规则-3"><a href="#书写规则-3" class="headerlink" title="书写规则"></a>书写规则</h3><p>单行内代码：<br>`npm install marked`  </p>
+<p>多行代码：<br>```<br>function test() {<br>    console.log(“Hello world!”);<br>}<br>```  </p>
+<h3 id="代码效果"><a href="#代码效果" class="headerlink" title="代码效果"></a>代码效果</h3><p>单行内代码：<br><code>npm install marked</code>  </p>
+<p>多行代码：  </p>
+<pre><code>function test() {  
+    console.log(&quot;Hello world!&quot;);  
+}  </code></pre><hr>
+<p><a name="image"></a></p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><h3 id="书写规则-4"><a href="#书写规则-4" class="headerlink" title="书写规则"></a>书写规则</h3><p><strong>方式一：本地资源</strong><br>准备：  将图片放在 source/images/ 目录下<br>![这是图片标题](/images/dva.jpg)  </p>
+<p><strong>方式二：在线资源</strong><br>![可爱的DVA](<a href="https://zos.alipayobjects.com/rmsportal/psagSCVHOKQVqqNjjMdf.jpg" target="_blank" rel="noopener">https://zos.alipayobjects.com/rmsportal/psagSCVHOKQVqqNjjMdf.jpg</a>)  </p>
+<h3 id="图片效果"><a href="#图片效果" class="headerlink" title="图片效果"></a>图片效果</h3><p><strong>方式一：本地资源</strong><br><img src="/images/dva.jpg" alt="这是图片标题"><br><strong>方式二：在线资源</strong><br><img src="https://zos.alipayobjects.com/rmsportal/psagSCVHOKQVqqNjjMdf.jpg" alt="可爱的DVA">  </p>
+<hr>
+<p><a name="list"></a></p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="书写规则-5"><a href="#书写规则-5" class="headerlink" title="书写规则"></a>书写规则</h3><p><strong>无序列表（减号）Unordered Lists (-)</strong><br>- 列表一<br>- 列表二<br>- 列表三  </p>
+<p><strong>无序列表（星号）Unordered Lists (*)</strong><br>* 列表一<br>* 列表二<br>* 列表三  </p>
+<p><strong>无序列表（加号和嵌套）Unordered Lists (+)</strong><br>+ 列表一<br>+ 列表二<br>    + 列表二-1<br>    + 列表二-2<br>    + 列表二-3  </p>
+<p><strong>有序列表 Ordered Lists (-)</strong>  </p>
+<ol>
+<li>第一行  </li>
+<li>第二行  </li>
+<li>第三行  </li>
+</ol>
+<h3 id="列表效果"><a href="#列表效果" class="headerlink" title="列表效果"></a>列表效果</h3><p><strong>无序列表（减号）Unordered Lists (-)</strong>  </p>
+<ul>
+<li>列表一  </li>
+<li>列表二  </li>
+<li>列表三  </li>
+</ul>
+<p><strong>无序列表（星号）Unordered Lists (*)</strong>  </p>
+<ul>
+<li>列表一  </li>
+<li>列表二  </li>
+<li>列表三  </li>
+</ul>
+<p><strong>无序列表（加号和嵌套）Unordered Lists (+)</strong>  </p>
+<ul>
+<li>列表一  </li>
+<li>列表二  <ul>
+<li>列表二-1  </li>
+<li>列表二-2  </li>
+<li>列表二-3  </li>
+</ul>
+</li>
+</ul>
+<p><strong>有序列表 Ordered Lists (-)</strong>  </p>
+<ol>
+<li>第一行  </li>
+<li>第二行  </li>
+<li>第三行  </li>
+</ol>
+<hr>
+<p><a name="escape"></a></p>
+<h2 id="反编译"><a href="#反编译" class="headerlink" title="反编译"></a>反编译</h2><h3 id="书写规则-6"><a href="#书写规则-6" class="headerlink" title="书写规则"></a>书写规则</h3><p>\\*literal asterisks\\*  </p>
+<h3 id="反编译效果"><a href="#反编译效果" class="headerlink" title="反编译效果"></a>反编译效果</h3><p>\*literal asterisks\*  </p>
+<hr>
+<p><a name="table"></a></p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><h3 id="书写规则-7"><a href="#书写规则-7" class="headerlink" title="书写规则"></a>书写规则</h3><h6 id="备注：表格语句的上一行必须为空行，否则表格不生效"><a href="#备注：表格语句的上一行必须为空行，否则表格不生效" class="headerlink" title="备注：表格语句的上一行必须为空行，否则表格不生效"></a>备注：表格语句的上一行必须为空行，否则表格不生效</h6><p><strong>列对齐</strong><br>| Left-Aligned  | Center Aligned  | Right Aligned |<br>| :———— |:—————:| —–:|<br>| col 3 is      | some wordy text | $1600 |<br>| col 2 is      | centered        |   $12 |<br>| zebra stripes | are neat        |    $1 |</p>
+<p><strong>单元格样式</strong><br>| Function name | Description                    |<br>| ————- | —————————— |<br>| `help()`      | Display the help window.       |<br>| `destroy()`   | **Destroy your computer!** |</p>
+<h3 id="表格效果"><a href="#表格效果" class="headerlink" title="表格效果"></a>表格效果</h3><p><strong>列对齐</strong>  </p>
+<table>
+<thead>
+<tr>
+<th align="left">Left-Aligned</th>
+<th align="center">Center Aligned</th>
+<th align="right">Right Aligned</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">col 3 is</td>
+<td align="center">some wordy text</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td align="left">col 2 is</td>
+<td align="center">centered</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td align="left">zebra stripes</td>
+<td align="center">are neat</td>
+<td align="right">$1</td>
+</tr>
+</tbody></table>
+<p><strong>单元格样式</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>Function name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>help()</code></td>
+<td>Display the help window.</td>
+</tr>
+<tr>
+<td><code>destroy()</code></td>
+<td><strong>Destroy your computer!</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="更多Markdown语法参考-http-xianbai-me-learn-md-article-extension-table-html"><a href="#更多Markdown语法参考-http-xianbai-me-learn-md-article-extension-table-html" class="headerlink" title="更多Markdown语法参考: http://xianbai.me/learn-md/article/extension/table.html"></a>更多Markdown语法参考: <a href="http://xianbai.me/learn-md/article/extension/table.html" target="_blank" rel="noopener">http://xianbai.me/learn-md/article/extension/table.html</a></h4><hr>
+<p><a href="#top">返回顶部</a>  </p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+    <h1>Tags</h1>
+
+    
+
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
