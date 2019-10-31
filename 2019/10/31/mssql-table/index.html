@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server/">
+            Microsoft SQL Server
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        数据库 - 表(Table)
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-10-31
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#create">创建表</a><br><a href="#update">修改表结构</a><br><a href="#drop">删除表</a><br><a href="#delete">清空表</a><br><a href="#selecte">查询表结构</a>  </p>
+<hr>
+<p><a name="create"></a></p>
+<h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><h3 id="基本表-默认列值可以为Null"><a href="#基本表-默认列值可以为Null" class="headerlink" title="基本表(默认列值可以为Null)"></a>基本表(默认列值可以为Null)</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型，<br>… );</p>
+<h3 id="指定列不能为null"><a href="#指定列不能为null" class="headerlink" title="指定列不能为null"></a>指定列不能为null</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型 NOT NULL，<br>… );</p>
+<h3 id="指定列为主键"><a href="#指定列为主键" class="headerlink" title="指定列为主键"></a>指定列为主键</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型 PRIMARY KEY，<br>… );</p>
+<h3 id="指定列有默认值"><a href="#指定列有默认值" class="headerlink" title="指定列有默认值"></a>指定列有默认值</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型 DEFAULT (‘默认值’)，<br>… );</p>
+<h3 id="指定列有check约束"><a href="#指定列有check约束" class="headerlink" title="指定列有check约束"></a>指定列有check约束</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型 CHECK (条件)，–(条件如：age &gt;= 18 AND age &lt;= 65)<br>… );</p>
+<h3 id="指定列自动计算"><a href="#指定列自动计算" class="headerlink" title="指定列自动计算"></a>指定列自动计算</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 AS (计算公式)， –(列名如实发薪水，计算公式可以是基本薪水+奖金。注AS表示该字段为自动计算字段，不能输入值)<br>… );</p>
+<h3 id="指定列自增"><a href="#指定列自增" class="headerlink" title="指定列自增"></a>指定列自增</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型 IDENTITY(1，1)，–(指定为自动的列必须是整数类型，且该列的约束是不能为空。IDENTITY的第一个参数是起始值，第二个参数是增量跨度)<br>… );</p>
+<h3 id="指定列为外键-推荐与表结构的定义分开写，不推荐此方法创建外键"><a href="#指定列为外键-推荐与表结构的定义分开写，不推荐此方法创建外键" class="headerlink" title="指定列为外键(推荐与表结构的定义分开写，不推荐此方法创建外键)"></a>指定列为外键(推荐与表结构的定义分开写，不推荐此方法创建外键)</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型，<br>…，<br>FOREIGN KEY (列名2) REFERENCES 表名2(表名2的列名2)    –(表名的外键是表名2的列名2，其中列名2必须是表名2的主键)<br>);</p>
+<h3 id="指定列为主键且自增"><a href="#指定列为主键且自增" class="headerlink" title="指定列为主键且自增"></a>指定列为主键且自增</h3><p>CREATE TABLE 表名(<br>列名1 列类型，<br>列名2 列类型 IDENTITY(1，1) PRIMARY KEY，<br>… );</p>
+<h3 id="指定两列为联合主键"><a href="#指定两列为联合主键" class="headerlink" title="指定两列为联合主键"></a>指定两列为联合主键</h3><p>CREATE TABLE 表明(<br>列明1 列类型，<br>列明 2 列类型，<br>列明3 列类型 PRIMARY KEY (列明1，列明3)，<br>…<br>);</p>
+<hr>
+<p><a name="update"></a></p>
+<h2 id="修改表结构"><a href="#修改表结构" class="headerlink" title="修改表结构"></a>修改表结构</h2><h3 id="修改表名称"><a href="#修改表名称" class="headerlink" title="修改表名称"></a>修改表名称</h3><p>ALTER TABLE表名 TO 新表名;<br>或EXEC sp_rename ‘表名’，’新表名’;</p>
+<h3 id="修改列名称"><a href="#修改列名称" class="headerlink" title="修改列名称"></a>修改列名称</h3><p>EXEC sp_rename ‘表名.列名’, ‘新列名’, ‘column’;</p>
+<h3 id="修改列类型"><a href="#修改列类型" class="headerlink" title="修改列类型"></a>修改列类型</h3><p>ALTER TABLE 表名 ALTER COLUMN 列名 新列类型;</p>
+<h3 id="新增列"><a href="#新增列" class="headerlink" title="新增列"></a>新增列</h3><p>ALTER TABLE 表名 ADD 列名 列类型;</p>
+<h3 id="删除列"><a href="#删除列" class="headerlink" title="删除列"></a>删除列</h3><p>ALTER TABLE 表名 DROP COLUMN 列名;</p>
+<h3 id="新增有默认值列"><a href="#新增有默认值列" class="headerlink" title="新增有默认值列"></a>新增有默认值列</h3><p>ALTER TABLE 表名 ADD 列名 列类型 NOT NULL DEFAULT (默认值);</p>
+<h3 id="为指定列添加默认值约束"><a href="#为指定列添加默认值约束" class="headerlink" title="为指定列添加默认值约束"></a>为指定列添加默认值约束</h3><p>ALTER TABLE 表名 ADD CONSTRAINT 约束名 DEFAULT ‘默认值’ FOR 列名;</p>
+<h3 id="删除列约束"><a href="#删除列约束" class="headerlink" title="删除列约束"></a>删除列约束</h3><p>ALTER TABLE 表名 DROP CONSTRAINT 约束名;</p>
+<h3 id="修改列属性值为not-null"><a href="#修改列属性值为not-null" class="headerlink" title="修改列属性值为not null"></a>修改列属性值为not null</h3><p>ALTER TABLE 表名 ALTER COLUMN 列名 列类型 NOT NULL;</p>
+<h3 id="为指定列添加主键约束"><a href="#为指定列添加主键约束" class="headerlink" title="为指定列添加主键约束"></a>为指定列添加主键约束</h3><p>ALTER TABLE 表名 ADD CONSTRAINT 约束名 PRIMARY KEY (列名);</p>
+<h3 id="为指定列添加唯一约束"><a href="#为指定列添加唯一约束" class="headerlink" title="为指定列添加唯一约束"></a>为指定列添加唯一约束</h3><p>ALTER TABLE 表名 ADD CONSTRAINT 约束名 UNIQUE (列名);</p>
+<h3 id="为指定列添加check约束"><a href="#为指定列添加check约束" class="headerlink" title="为指定列添加check约束"></a>为指定列添加check约束</h3><p>ALTER TABLE 表名 ADD CONSTRAINT 约束名 CHECK  (列名 列条件);    –如列名是gender，列条件是(gender = N’男’ or gender = N’女’)</p>
+<h3 id="为指定列添加外键约束"><a href="#为指定列添加外键约束" class="headerlink" title="为指定列添加外键约束"></a>为指定列添加外键约束</h3><p>ALTER TABLE 表名 ADD CONSTRAINT 约束名 FOREIGN KEY (列名) REFERENCES 表名2(列名2);</p>
+<h3 id="为指定列添加聚集索引"><a href="#为指定列添加聚集索引" class="headerlink" title="为指定列添加聚集索引"></a>为指定列添加聚集索引</h3><p>CREATE CLUSTEREDINDEX 索引名 ON 表名(列名[ASC|DESC]);</p>
+<h3 id="为指定列添加非聚集索引"><a href="#为指定列添加非聚集索引" class="headerlink" title="为指定列添加非聚集索引"></a>为指定列添加非聚集索引</h3><p>CREATE NONCLUSTERED INDEX 索引名 ON 表名(列名[ASC|DESC]);</p>
+<h3 id="为指定列添加唯一索引"><a href="#为指定列添加唯一索引" class="headerlink" title="为指定列添加唯一索引"></a>为指定列添加唯一索引</h3><p>CREATE UNIQUE INDEX 索引名 ON 表名(列名[ASC|DESC]);</p>
+<h3 id="修改索引名称"><a href="#修改索引名称" class="headerlink" title="修改索引名称"></a>修改索引名称</h3><p>EXEC sp_rename N’表名.索引名’，’新索引名’，N’index’;</p>
+<h4 id="修改表中的约束只能是先删除旧约束，再添加新约束"><a href="#修改表中的约束只能是先删除旧约束，再添加新约束" class="headerlink" title="修改表中的约束只能是先删除旧约束，再添加新约束"></a>修改表中的约束只能是先删除旧约束，再添加新约束</h4><hr>
+<p><a name="drop"></a></p>
+<h2 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h2><h3 id="删除表-清空并移除整张表"><a href="#删除表-清空并移除整张表" class="headerlink" title="删除表(清空并移除整张表)"></a>删除表(清空并移除整张表)</h3><p>DROP TABLE 表名;</p>
+<hr>
+<p><a name="delete"></a></p>
+<h2 id="清空表"><a href="#清空表" class="headerlink" title="清空表"></a>清空表</h2><h3 id="TRUNCATE清空表"><a href="#TRUNCATE清空表" class="headerlink" title="TRUNCATE清空表"></a>TRUNCATE清空表</h3><p>TRUNCATE TABLE 表名;   </p>
+<h4 id="注：清空表记录、释放表空间、不能激活触发器、仅删除整张表记录"><a href="#注：清空表记录、释放表空间、不能激活触发器、仅删除整张表记录" class="headerlink" title="注：清空表记录、释放表空间、不能激活触发器、仅删除整张表记录"></a>注：清空表记录、释放表空间、不能激活触发器、仅删除整张表记录</h4><h3 id="DELETE清空表"><a href="#DELETE清空表" class="headerlink" title="DELETE清空表"></a>DELETE清空表</h3><p>DELETE FROM 表名 [WHERE … ];  </p>
+<h4 id="注：不释放表空间、能激活触发器。如果没有WHERE子句，则清空表记录；如果有WHERE子句，则删除满足过滤条件的表记录"><a href="#注：不释放表空间、能激活触发器。如果没有WHERE子句，则清空表记录；如果有WHERE子句，则删除满足过滤条件的表记录" class="headerlink" title="注：不释放表空间、能激活触发器。如果没有WHERE子句，则清空表记录；如果有WHERE子句，则删除满足过滤条件的表记录"></a>注：不释放表空间、能激活触发器。如果没有WHERE子句，则清空表记录；如果有WHERE子句，则删除满足过滤条件的表记录</h4><hr>
+<p><a name="selecte"></a></p>
+<h2 id="查询表结构"><a href="#查询表结构" class="headerlink" title="查询表结构"></a>查询表结构</h2><h3 id="查询表是否存在"><a href="#查询表是否存在" class="headerlink" title="查询表是否存在"></a>查询表是否存在</h3><p>SELECT * FROM sysobjects WHERE name = ‘表名’;</p>
+<h3 id="查询表结构-1"><a href="#查询表结构-1" class="headerlink" title="查询表结构"></a>查询表结构</h3><p>SELECT  CASE WHEN col.colorder = 1 THEN obj.name<br>                  ELSE ‘’<br>             END AS 表名,<br>        col.colorder AS 序号 ,<br>        col.name AS 列名 ,<br>        ISNULL(ep.[value], ‘’) AS 列说明 ,<br>        t.name AS 数据类型 ,<br>        col.length AS 长度 ,<br>        ISNULL(COLUMNPROPERTY(col.id, col.name, ‘Scale’), 0) AS 小数位数 ,<br>        CASE WHEN COLUMNPROPERTY(col.id, col.name, ‘IsIdentity’) = 1 THEN ‘1’<br>             ELSE ‘’<br>        END AS 标识 ,<br>        CASE WHEN EXISTS ( SELECT   1<br>                           FROM     dbo.sysindexes si<br>                                    INNER JOIN dbo.sysindexkeys sik ON si.id = sik.id<br>                                                              AND si.indid = sik.indid<br>                                    INNER JOIN dbo.syscolumns sc ON sc.id = sik.id<br>                                                              AND sc.colid = sik.colid<br>                                    INNER JOIN dbo.sysobjects so ON so.name = si.name<br>                                                              AND so.xtype = ‘PK’<br>                           WHERE    sc.id = col.id<br>                                    AND sc.colid = col.colid ) THEN ‘1’<br>             ELSE ‘’<br>        END AS 主键 ,<br>        CASE WHEN col.isnullable = 1 THEN ‘1’<br>             ELSE ‘’<br>        END AS 允许空 ,<br>        ISNULL(comm.text, ‘’) AS 默认值<br>FROM    dbo.syscolumns col<br>        LEFT  JOIN dbo.systypes t ON col.xtype = t.xusertype<br>        inner JOIN dbo.sysobjects obj ON col.id = obj.id<br>                                         AND obj.xtype = ‘U’<br>                                         AND obj.status &gt;= 0<br>        LEFT  JOIN dbo.syscomments comm ON col.cdefault = comm.id<br>        LEFT  JOIN sys.extended_properties ep ON col.id = ep.major_id<br>                                                      AND col.colid = ep.minor_id<br>                                                      AND ep.name = ‘MS_Description’<br>        LEFT  JOIN sys.extended_properties epTwo ON obj.id = epTwo.major_id<br>                                                         AND epTwo.minor_id = 0<br>                                                         AND epTwo.name = ‘MS_Description’<br>WHERE   obj.name = ‘表名’<br>ORDER BY col.colorder ;</p>
+<h3 id="查询表列名称和列属性"><a href="#查询表列名称和列属性" class="headerlink" title="查询表列名称和列属性"></a>查询表列名称和列属性</h3><p>SELECT  C.name AS ColumnName, T.name AS ColumnType<br>FROM syscolumns C LEFT JOIN systypes T ON C.xusertype = T.xusertype<br>WHERE C.id = object_id(‘表名’);</p>
+<h3 id="查询表外键"><a href="#查询表外键" class="headerlink" title="查询表外键"></a>查询表外键</h3><p>SELECT fk.name, fk.object_id, OBJECT_NAME(fk.parent_object_id) as referenceTableName<br>FROM sys.foreign_keys as fk JOIN sys.objects as obj<br>  ON fk.referenced_object_id = obj.object_id<br>WHERE obj.name=’表名’;</p>
+<h3 id="查询重复记录"><a href="#查询重复记录" class="headerlink" title="查询重复记录"></a>查询重复记录</h3><p>SELECT c1.* FROM<br>(SELECT row_number() OVER(order by [columns…] ) AS rownum,* FROM whctrl [WHERE … ])   c1 JOIN<br>(SELECT row_number() OVER(order by [columns…] )AS rownum,* FROM whctrl [WHERE … ]) c2<br>WHERE c1.columns … = c2.columns …  AND c1.rownum&lt;&gt;c2.rownum;</p>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
