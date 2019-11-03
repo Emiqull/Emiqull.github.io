@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server/">
+            Microsoft SQL Server
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        存储过程(Procedure)
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-03
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name=”top”></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#overview">概述</a><br><a href="#advantage">优点</a><br><a href="#kind">分类</a><br><a href="#modify">修改存储过程</a><br><a href="#declare">存储过程中变量声明与变量赋值</a>  </p>
+<hr>
+<p><a name="overview"></a></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>存储过程Procedure是一组为了完成特定功能的SQL语句集合，经编译后存储在数据库中，用户通过指定存储过程的名称或给出参数来执行  </li>
+<li>存储过程中可以包含逻辑控制语句和数据操纵语句，也可以接受参数、输出参数、返回单个或多个结果集以及返回值  </li>
+<li>由于存储过程在创建时即在数据库服务器上进行了编译并存储在数据库中，所以存储过程运行要比单个的SQL语句块要快  </li>
+<li>由于在调用存储过程时只需提供存储过程名和必要的参数信息，在一定程度上也可以减少网络流量、简单网络负担  </li>
+</ul>
+<hr>
+<p><a name="advantage"></a></p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p><strong>存储过程允许标准组件式编程</strong>  </p>
+<ul>
+<li>存储过程创建后可以在程序中被多次调用执行，而不必重新编写该存储过程的SQL语句  </li>
+<li>数据库专业人员可以随时对存储过程进行修改，但对应用程序源代码却毫无影响，提高了程序的可移植性  </li>
+</ul>
+<p><strong>存储过程能够实现较快的执行速度</strong>  </p>
+<ul>
+<li>如果某一操作包含大量的T-SQL语句代码，分别被多次执行，那么存储过程要比批处理的执行速度快得多  </li>
+<li>因为存储过程是预编译的，首次运行时，查询优化器对其进行分析、优化，并给出最终被存在系统表中的存储计划，批处理的T-SQL语句每次运行都需要预编译和优化，所以速度就要慢一些  </li>
+</ul>
+<p><strong>存储过程减轻网络流量</strong>  </p>
+<ul>
+<li>对于同一个针对数据库对象的操作，如果这一操作所涉及到的T-SQL语句被组织成一个存储过程，那么当在客户机上调用该存储过程时，网络中传递的只是该调用语句，否则将会是多条SQL语句。从而减轻了网络流量，降低了网络负载  </li>
+</ul>
+<p><strong>存储过程可被作为一种安全机制来充分利用</strong>  </p>
+<ul>
+<li>系统管理员可以对执行的某一个存储过程进行权限限制，从而能够实现对某些数据访问的限制，避免非授权用户对数据的访问，保证数据的安全  </li>
+</ul>
+<hr>
+<p><a name="kind"></a></p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p><strong>创建基本存储过程</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROC | PROCEDURE 存储过程名</span><br><span class="line">    [&#123;@参数数据类型&#125; [=默认值] [output],</span><br><span class="line">     &#123;@参数数据类型&#125; [=默认值] [output],</span><br><span class="line">     ....</span><br><span class="line">    ]</span><br><span class="line">as</span><br><span class="line">    SQL_statements</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建不带参数的存储过程</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (exists (select * from sys.objects where name = &apos;proc_get_student&apos;))</span><br><span class="line">    drop proc proc_get_student</span><br><span class="line">go --删除或存在的存储过程</span><br><span class="line">CREATE PROC proc_get_student</span><br><span class="line">as</span><br><span class="line">    select * from student;</span><br><span class="line">go</span><br></pre></td></tr></table></figure>
+<p>调用存储过程：exec proc_get_student;  </p>
+<p><strong>创建带参数的存储过程</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (object_id(&apos;proc_find_stu&apos;, &apos;P&apos;) is not null)</span><br><span class="line">    drop proc proc_find_stu</span><br><span class="line">go --删除或存在的存储过程</span><br><span class="line">CREATE PROC proc_find_stu(DECLARE  @startId int, DECLARE  @endId int)</span><br><span class="line">as</span><br><span class="line">    select * from student where id between @startId and @endId</span><br><span class="line">go</span><br></pre></td></tr></table></figure>
+<p>调用存储过程：exec proc_find_stu 2, 4;  </p>
+<p><strong>创建带通配符参数的存储过程</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (object_id(&apos;proc_findStudentByName&apos;, &apos;P&apos;) is not null)</span><br><span class="line">    drop proc proc_findStudentByName</span><br><span class="line">go --删除或存在的存储过程</span><br><span class="line">CREATE PROC proc_findStudentByName(DECLARE  @name varchar(20) = &apos;%j%&apos;, DECLARE  @nextName varchar(20) = &apos;%&apos;)</span><br><span class="line">as</span><br><span class="line">    select * from student where name like @name and name like @nextName;</span><br><span class="line">go</span><br></pre></td></tr></table></figure>
+<p>调用存储过程：</p>
+<ul>
+<li>exec proc_findStudentByName;  </li>
+<li>exec proc_findStudentByName ‘%o%’, ‘t%’;–查询name列内容中含有o，且以t开头的记录  </li>
+</ul>
+<p><strong>创建带输出参数的存储过程</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">if (object_id(&apos;proc_getStudentRecord&apos;, &apos;P&apos;) is not null)</span><br><span class="line">    drop proc proc_getStudentRecord</span><br><span class="line">go --删除或存在的存储过程</span><br><span class="line">CREATE PROC proc_getStudentRecord(</span><br><span class="line">    DECLARE   @id int, --默认输入参数</span><br><span class="line">    DECLARE   @name varchar(20) out, --输出参数</span><br><span class="line">    DECLARE   @age varchar(20) output--输入输出参数，传递到存储过程执行后，再传递出最后一次被赋值的数据</span><br><span class="line">)</span><br><span class="line">as</span><br><span class="line">    select @name = name, @age = age  from student where id = @id and sex = @age;</span><br><span class="line">go</span><br></pre></td></tr></table></figure>
+<p>调用存储过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">declare @id int,</span><br><span class="line">        @name varchar(20),</span><br><span class="line">        @temp varchar(20);</span><br><span class="line">set @id = 7;</span><br><span class="line">set @temp = 1;</span><br><span class="line">exec proc_getStudentRecord @id, @name out, @temp output;</span><br><span class="line">select @name, @temp;</span><br><span class="line">print @name + &apos;#&apos; + @temp;</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建不带缓存的存储过程</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (object_id(&apos;proc_temp&apos;, &apos;P&apos;) is not null)</span><br><span class="line">    drop proc proc_temp</span><br><span class="line">go --删除或存在的存储过程</span><br><span class="line">CREATE PROC proc_temp</span><br><span class="line">WITH RECOMPILE</span><br><span class="line">as</span><br><span class="line">    select * from student;</span><br><span class="line">go</span><br></pre></td></tr></table></figure>
+<p>调用存储过程：exec proc_temp;  </p>
+<p><strong>创建分页的存储过程</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if (object_id(&apos;pro_page&apos;, &apos;P&apos;) is not null)</span><br><span class="line">    drop proc pro_stu</span><br><span class="line">go --删除或存在的存储过程</span><br><span class="line">CREATE PROCEDURE pro_stu(</span><br><span class="line">    @pageIndex int,</span><br><span class="line">    @pageSize int</span><br><span class="line">)</span><br><span class="line">as</span><br><span class="line">    declare @startRow int, @endRow int</span><br><span class="line">    set @startRow = (@pageIndex - 1) * @pageSize +1</span><br><span class="line">    set @endRow = @startRow + @pageSize -1</span><br><span class="line">    select * from (</span><br><span class="line">        select *, row_number() over (order by id asc) as number from student</span><br><span class="line">    ) t</span><br><span class="line">    where t.number between @startRow and @endRow;</span><br></pre></td></tr></table></figure>
+<p>调用存储过程：exec pro_stu 2, 2;(这里使用的是ROW_NUMBER()函数完成的分页)  </p>
+<hr>
+<p><a name="modify"></a></p>
+<h2 id="修改存储过程"><a href="#修改存储过程" class="headerlink" title="修改存储过程"></a>修改存储过程</h2><p>ALTER PROC|PROCEDURE  存储过程名 AS T-SQL语句;  </p>
+<hr>
+<p><a name="declare"></a></p>
+<h2 id="存储过程中变量声明与变量赋值"><a href="#存储过程中变量声明与变量赋值" class="headerlink" title="存储过程中变量声明与变量赋值"></a>存储过程中变量声明与变量赋值</h2><p><strong>变量类型</strong><br>int, char, varchar, decimal, text…  </p>
+<p><strong>变量声明</strong><br>DECLARE @变量名 变量类型  </p>
+<p><strong>变量赋值</strong><br>DECLARE @ID INT<br>SET @ID = (SELECT ID FROM test_Table)    –这里示例使用SET方式赋值  </p>
+<p><strong>注意</strong>：若变量的赋值是T-SQL语句时，整个查询语句需要用括号括起来  </p>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>

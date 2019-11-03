@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server/">
+            Microsoft SQL Server
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        视图(Viwe)
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-03
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name=”top”></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#overview">概述</a><br><a href="#advantage">优点</a><br><a href="#kind">分类</a><br><a href="#define">查询视图定义</a><br><a href="#refresh">刷新视图</a><br><a href="#tips">实践技巧</a>  </p>
+<hr>
+<p><a name="overview"></a></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ul>
+<li>视图是一个虚拟的表，是一个表中的数据经过某种筛选后的显示方式  </li>
+<li>视图由一个预定义的SELECT查询语句构成  </li>
+<li>通过视图，客户端不再需要知道底层表的表结构及其之间的关系  </li>
+<li>视图提供了一个统一访问数据的接口  </li>
+</ul>
+<hr>
+<p><a name="advantage"></a></p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li>视图隐藏了底层的表结构，简化了数据访问操作  </li>
+<li>因为隐藏了底层的表结构，所以加强了安全性，用户只能看到视图提供的数据  </li>
+<li>使用视图，方便了权限管理，让用户对视图有权限而不是对底层表有权限进一步加强了安全性  </li>
+<li>视图提供了一个用户访问的接口，当底层表改变后，改变视图的语句来进行适应，使已经建立在这个视图上客户端程序不受影响  </li>
+</ul>
+<hr>
+<p><a name="kind"></a></p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="普通视图"><a href="#普通视图" class="headerlink" title="普通视图"></a>普通视图</h3><p><strong>定义</strong><br>普通视图由一个Select语句所定义，视图仅仅包含其定义和被引用表的metadata.并不实际存储数据  </p>
+<p><strong>创建格式</strong><br>CREATE VIEW view_name AS {select_statement};  </p>
+<p><strong>创建限制</strong>  </p>
+<ul>
+<li>在View中，除非有TOP关键字，否则不能用Order By子句(若执意要用Order by,可以使用使用Top 100 percent…)  </li>
+<li>View在每个Schema中命名必须独一无二  </li>
+<li>View嵌套不能超过32层（其实实际工作中用不到)  </li>
+<li>Compute,compute by,INTO关键字不允许出现在View中  </li>
+<li>View不能建立在临时表上  </li>
+<li>View不能对全文索引进行查询  </li>
+</ul>
+<h3 id="索引视图"><a href="#索引视图" class="headerlink" title="索引视图"></a>索引视图</h3><p><strong>定义</strong><br>在普通的视图的基础上，为视图建立唯一聚集索引  </p>
+<p><strong>创建限制</strong>  </p>
+<ul>
+<li>索引视图涉及的基本表必须ANSI_NULLS设置为ON  </li>
+<li>索引视图本身必须设置ANSI_NULLS和QUOTED_INDETIFIER为ON  </li>
+<li>索引视图只能引用基本表  </li>
+<li>SCHEMABINDING必须设置  </li>
+<li>定义索引视图时必须使用Schema.ViewName这样的全名  </li>
+<li>索引视图中不能有子查询  </li>
+<li>avg,max,min,stdev,stdevp,var,varp这些聚合函数不能用  </li>
+</ul>
+<p><strong>创建实例</strong>  </p>
+<ul>
+<li><p>首先：创建一个基础查询语句  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT p.Name,s.OrderQty </span><br><span class="line">FROM Production.Product p</span><br><span class="line">inner join Sales.SalesOrderDetail s</span><br><span class="line">ON p.ProductID=s.ProductID</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其次：根据该查询语句创建视图  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW v_Test_IndexedView</span><br><span class="line">WITH SCHEMABINDING</span><br><span class="line">AS</span><br><span class="line">SELECT p.Name,s.OrderQty,s.SalesOrderDetailID</span><br><span class="line">FROM Production.Product p</span><br><span class="line">inner join Sales.SalesOrderDetail s</span><br><span class="line">ON p.ProductID=s.ProductID</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后：在视图上建立聚集索引  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE UNIQUE CLUSTERED INDEX indexedview_test1</span><br><span class="line">ON v_Test_IndexedView(SalesOrderDetailID)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>注意</strong><br>通过普通视图和索引视图的执行计划可以非常清晰的看到索引视图的高性能，但需要注意的是索引视图仅SQL SERVER企业版和开发版才支持  </p>
+<h3 id="分割视图-分布式分割视图"><a href="#分割视图-分布式分割视图" class="headerlink" title="分割视图(分布式分割视图)"></a>分割视图(分布式分割视图)</h3><p><strong>定义</strong>  </p>
+<ul>
+<li>整个视图所返回的数据记录，由几个平行表(相同的表结构，表记录不同)所连接的数据集  </li>
+<li>分割视图总体上可分为两种：本地分割视图、分布式分割视图(本地分割视图仅仅是为了和SQL Server 2005之前的版本的一种向后兼容)  </li>
+</ul>
+<p><strong>创建限制</strong>  </p>
+<ul>
+<li>分布式分割视图所涉及的表之间的主键不能重复  </li>
+<li>分布式分割视图中面对的查询中包含聚合函数，尤其是聚合函数中包含DISTINCT，会大大降低性能  </li>
+</ul>
+<p><strong>创建实例</strong>  </p>
+<ul>
+<li><p>准备环境：在微软示例数据库AdventureWorks，通过ContactID从前100行和100-200行的数据分别存入两个表，Employee100和Employee200  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">--create Employee100</span><br><span class="line">SELECT TOP 100 * INTO Employee100</span><br><span class="line">FROM HumanResources.Employee</span><br><span class="line"></span><br><span class="line">ORDER BY EmployeeID</span><br><span class="line">--create Employee200</span><br><span class="line">SELECT *  INTO Employee200</span><br><span class="line">FROM</span><br><span class="line">(SELECT TOP 100 *</span><br><span class="line">FROM HumanResources.Employee</span><br><span class="line"></span><br><span class="line">WHERE EmployeeID NOT IN (SELECT TOP 100 EmployeeID FROM HumanResources.Employee ORDER BY EmployeeID)</span><br><span class="line">ORDER BY HumanResources.Employee.EmployeeID)AS e</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立分布式分割视图  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW v_part_view_test</span><br><span class="line">AS</span><br><span class="line">SELECT * FROM Employee100</span><br><span class="line">UNION</span><br><span class="line">SELECT * FROM Employee200</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>注意</strong><br>通过查看查询视图查找ID是105的执行计划，可以看到查询计划仅查找了Employee200这张表  </p>
+<hr>
+<p><a name="define"></a></p>
+<h2 id="查询视图定义"><a href="#查询视图定义" class="headerlink" title="查询视图定义"></a>查询视图定义</h2><p>SELECT * FROM sys.sql_modules WHERE object_id=OBJECT_ID(‘视图名称’);  </p>
+<hr>
+<p><a name="refresh"></a></p>
+<h2 id="刷新视图"><a href="#刷新视图" class="headerlink" title="刷新视图"></a>刷新视图</h2><p><strong>前提摘要</strong><br>普通视图仅仅存储的是select语句和所引用表的metadata，当底层表数据或表结果改变时，有时候视图中表的metadata并没有及时同步，因此需要通过刷新视图手动同步  </p>
+<p><strong>语法格式</strong><br>EXEC sp_refreshview 视图名称;  –建议在每次修改表结构后，总是刷新相关视图  </p>
+<hr>
+<p><a name="tips"></a></p>
+<h2 id="实践技巧"><a href="#实践技巧" class="headerlink" title="实践技巧"></a>实践技巧</h2><ul>
+<li>视图中的SELECT语句性能一定要调到最优；</li>
+<li>视图最好不要嵌套，如果非要嵌套，最多嵌套一层  </li>
+<li>能用存储过程和自定义函数替代视图的，尽量不要使用View视图，存储过程会缓存执行计划，性能更优，限制更少  </li>
+<li>在分割(分布式分割)视图上，不要使用聚合函数，尤其是聚合函数还包含了Distinct  </li>
+<li>在建立视图时，如果Where子句能加在视图内，不要加在视图外（因为调用视图会返回所有行，然后再筛选，性能杀手)  </li>
+<li>视图里尽量避免使用*代表所有列：*不仅对查询性能有影响，而且也不便于视图中关联表结构的更新  </li>
+<li>无论视图所涉及的表结构有没有修改，在每次对视图中SQL语句修改后，刷新一下视图总是好的  </li>
+<li>查询视图时，若对视图进行WHERE条件的筛选，默认会在查询时对条件字段建立索引，如果没有的话，大数据量时会很慢  </li>
+<li>视图中使用类似于TOP 1000且视图外使用WHERE条件筛选，当查询视图时会按照TOP关键字进行数据库系统内部排序，再按照WHERE条件过滤，如果WHERE筛选的数据不在这1000个记录中，就会查询不到数据  </li>
+</ul>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
