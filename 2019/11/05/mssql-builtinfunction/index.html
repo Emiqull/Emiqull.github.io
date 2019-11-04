@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server/">
+            Microsoft SQL Server
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        内置函数(Build in Function)
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-05
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#string">字符串函数</a><br><a href="#datetime">时间日期函数</a><br><a href="#math">数学函数</a><br><a href="#convert">数据类型转换</a><br><a href="#sort">排序函数</a><br><a href="#aggregate">聚合函数</a><br><a href="#nullCheck">Null值判断</a><br><a href="#other">其他函数</a>  </p>
+<hr>
+<p><a name="string"></a></p>
+<h2 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h2><p><strong>CHARINDEX(TargetCharacter, SourceCharacter[, indexNumber]);</strong><br>定义：返回[从源字符串指定索引开始]搜索目标字符串在源字符串中第一次出现的索引，若目标字符串在源字符串中不存在，则返回0<br>注意：若目标字符串与源字符串的内容是或全是NULL，则返回NULL  </p>
+<p><strong>LEFT(TargetCharacter, lengthNumber);</strong><br>定义：返回目标字符串从左侧开始，长度为指定整数的字符串表达式  </p>
+<p><strong>RIGHT(TargetCharacter, lengthNumber);</strong><br>定义：返回目标字符串从右侧开始，长度为指定整数的字符串表达式  </p>
+<p><strong>LEN(TargetCharacter);</strong><br>定义：返回目标字符串的字符数，即字符串长度<br>注意：返回的字符数不包含字符串右边空格，包含制表符、换行符  </p>
+<p><strong>LOWER(TargetCharacter);</strong><br>定义：返回目标字符串的小写表达式  </p>
+<p><strong>UPPER(TargetCharacter);</strong><br>定义：返回目标字符串的大写表达式  </p>
+<p><strong>LTRIM(TargetCharacter);</strong><br>定义：返回删除目标字符串左侧空格的表达式  </p>
+<p><strong>RTRIM(TargetCharacter);</strong><br>定义：返回删除目标字符串右侧空格的表达式  </p>
+<p><strong>PATINDEX(TargetCharacter, SourceCharacter);</strong><br>定义：返回目标字符串在源字符串中第一次出现的索引，若目标字符串在源字符串中不存在，则返回0<br>注意： 与CHARINDEX函数不同的是PATINDEX函数的目标字符串支持使用通配符，如SELECT (‘%ab%’, ‘123ab456’); –返回4、SELECT (‘%ab_’, ‘123ab456’); –返回0  </p>
+<p><strong>REVERSE(TargetCharacter);</strong><br>定义：返回目标字符串反转后的表达式  </p>
+<p><strong>SPACE(spaceNumber);</strong><br>定义：返回指定整数个的空格<br>注意：SPACE函数可使用在字符串拼接中，如 SELECT ‘A’+SPACE(4)+’B’; –返回A    B  </p>
+<p><strong>STR(floatNumber[, lengthNumber[, decimalLengthNumber]]);</strong><br>定义：返回[指定整个字符串长度的[指定小数位长度的]]数值的字符串表达式<br>注意：</p>
+<ul>
+<li>数值的字符串长度小于指定长度时，字符串表达式前面补足空格、截断小数位遵守四舍五入、截取整数位返回**  </li>
+<li>整个字符串长度包括小数点、符号、数字以及空格；总长都默认值为10且不保留小数；小数位长度最大是16  </li>
+</ul>
+<p><strong>STUFF(SourceCharacter, beginNumber, lengthNumber, TargetCharacter);</strong><br>定义：返回源字符串从指定开始索引位置开始删除指定长度的字符，并在该索引位置插入目标字符串后的字符串表达式  </p>
+<p><strong>SUBSTRING(TargetCharacter, beginNumber, lengthNumber);</strong><br>定义：返回目标字符串从指定开始索引位置截取的指定长度的字符串表达式  </p>
+<p><strong>REPLACE(SourceCharacter, replaceCharacter, TargetCharacter);</strong><br>定义：返回目标字符串替换源字符串中存在的所有替换字符串后的字符串表达式  </p>
+<p><strong>REPLICATE(TargetCharacter, intNumber);</strong><br>定义：返回以指定数字次数重复目标字符串后的字符串表达式<br>注意：若指定次数为负数，则返回NULL值；若指定次数为0，则返回空值  </p>
+<p><strong>REPLICATE(TargetCharacter, intNumber);</strong><br>定义：返回目标字符串重复指定次数后的字符串表达式<br>注意：若指定重复次数为负数，则返回NULL；若指定重复次数为0，则返回空  </p>
+<hr>
+<p><a name="datetime"></a></p>
+<h2 id="时间日期函数"><a href="#时间日期函数" class="headerlink" title="时间日期函数"></a>时间日期函数</h2><p><strong>DATEADD(datePart, intNumber, TargetDateTime);</strong><br>定义：返回在目标日期的指定日期部分加上指定整数值后的日期表达式<br>注意：detePart常用格式1，YEAR日期年、MONTH日期月、DAY日期天、HOUR日期时、MINUTE日期分、SECOND日期秒  </p>
+<p><strong>DATEDIFF(datePart, BeginDateTime, EndDateTime);</strong><br>定义：返回结束日期与开始日期的时间差值的指定日期部分的数值<br>注意：该函数是计算日期间的差值，在返回指定差值日期部分的指定部分  </p>
+<p><strong>DATENAME(datePart, TargetDateTime);</strong><br>定义：返回目标日期的指定日期部分的名称<br>注意：datePart常用格式2，WEEKDAY星期数、DAYOFYEAR年中天  </p>
+<p><strong>GETDATE();</strong><br>定义：返回当前系统时间  </p>
+<p><strong>GETUTCDATE();</strong><br>定义：返回当前UTC(世界标准时间)时间  </p>
+<hr>
+<p><a name="math"></a></p>
+<h2 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h2><p><strong>ABS(Number);</strong><br>定义：返回指定数值的绝对值  </p>
+<p><strong>PI();</strong><br>定义：返回π值  </p>
+<p><strong>CEILIING(Number);</strong><br>定义：返回向上舍入指定数值的整数值  </p>
+<p><strong>FLOOR(Number);</strong><br>定义：返回向下舍入指定数值的整数值  </p>
+<p><strong>ROUND(Number, decimalIndexNumber[, funcationWay]);</strong><br>定义：返回指定数值[按舍入方式]舍入指定小数索引位置的后一位后的数值且小数索引位置后全变为0的数值表达式<br>注意：</p>
+<ul>
+<li>函数方式默认为0，舍入方式遵守四舍五入；若指定其他整数值，则舍入方式等同于截取  </li>
+<li>小数索引位置大于0舍入小数，小数索引位置小于0舍入整数  </li>
+<li>当小数索引位置为负数且数值等于指定数值的整数部分长度，若舍入方式为截取，则返回0.再拼接指定数值的小数位个数的0  </li>
+<li>若舍入方式为默认，当指定数值整数最高位小于5，则返回0.再拼接指定数值的小数位个数的0  </li>
+<li>若指定数值整数最高位大于5，则ERROR  </li>
+</ul>
+<p><strong>POWER(Number, powerNumber);</strong><br>定义：返回计算指定数值的指定次幂后的数值  </p>
+<p><strong>SQRT(Number);</strong><br>定义：返回计算指定数值的平方根后的数值  </p>
+<p><strong>SIGN(Number);</strong><br>定义：返回指定数值的正负，若为正数返回1；若为负数返回-1；若为0返回0  </p>
+<hr>
+<p><a name="convert"></a></p>
+<h2 id="数据类型转换函数"><a href="#数据类型转换函数" class="headerlink" title="数据类型转换函数"></a>数据类型转换函数</h2><p><strong>CAST(TargetExpression AS dataType[(LengthNumber)]);</strong><br>定义：返回目标表达式转换为[指定长度的]指定数据类型的表达式  </p>
+<p><strong>CONVERT(dateType[(LengthNumber)], TargetExpression[, timeStyle]);</strong><br>定义：返回[指定日期显示样式的]目标表达式转换为[指定长度的]指定数据类型的表达式<br>补充：常见日期格式的转换方法  </p>
+<ul>
+<li>Select CONVERT(varchar(100), GETDATE(), 24): 10:57:47  </li>
+<li>Select CONVERT(varchar(100), GETDATE(), 108): 10:57:49  </li>
+<li>Select CONVERT(varchar(100), GETDATE(), 12): 060516  </li>
+<li>Select CONVERT(varchar(100), GETDATE(), 23): 2006-05-16  </li>
+<li>Select CONVERT(varchar(12) , getdate(), 112 ) : 20040912  </li>
+<li>Select CONVERT(varchar(100), GETDATE(), 8): 10:57:46  </li>
+</ul>
+<hr>
+<p> <a name="sort"></a></p>
+<h2 id="排序函数"><a href="#排序函数" class="headerlink" title="排序函数"></a>排序函数</h2><p><strong>ROW_NUMBER()</strong><br>定义：SELECT ROW_NUMBER() OVER (ORDER BY 列名 [ASC|DESC]) AS 序号列名, * FROM 表名<br>注意：ROW_NUMBER函数会按照排名的顺序生成递增的排名序号  </p>
+<p><strong>RANK()</strong><br>定义：SELECT RANK() OVER (ORDER BY 列名 [ASC|DESC]) AS 序号列名, * FROM 表名<br>注意：RANK函数会把OVER子句中相同的字段作为一组进行排名，且每组的排名序号相同  </p>
+<hr>
+<p><a name="aggregate"></a></p>
+<h2 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h2><p><strong>AVG(列名);</strong><br>定义：返回指定列的值的平均值<br>注意：AVG函数会忽略NULL值  </p>
+<p><strong>MIN(列名);</strong><br>定义：返回指定列的值的最小值<br>注意：MIN函数会忽略NULL值  </p>
+<p><strong>MAX(列名);</strong><br>定义：返回指定列的值的最大值<br>注意：MAX函数会忽略NULL值  </p>
+<p><strong>SUM(列名);</strong><br>定义：返回指定列的值的和<br>注意：SUM函数会忽略NULL值  </p>
+<p><strong>COUNT(列名[, *]);</strong><br>定义：返回当前记录源的总项数<br>注意：COUNT函数不会忽略NULL值  </p>
+<hr>
+<p><a name="nullCheck"></a></p>
+<h2 id="Null值判断函数"><a href="#Null值判断函数" class="headerlink" title="Null值判断函数"></a>Null值判断函数</h2><p><strong>ISNULL(TargetExpression, replaceValue);</strong><br>定义：若目标表达式的值为NULL，则返回指定的替换值；若目标表达式的值不为NULL，则返回目标表达式  </p>
+<p><strong>COALESCE([TargetExpression1,TargetExpression2, … , ]TargetExpressionN);</strong><br>定义：返回目标表达式中第一不为NULL的值<br>注意：目标表达式中至少要有一个不为NULL的值，否则会ERROR  </p>
+<hr>
+<p><a name="other"></a></p>
+<h2 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数</h2><p><strong>IIF(LogicalExpression, TrueExpression, FalseExpression);</strong><br>定义：若逻辑表达式的结果为TRUE，则返回真表达式；若逻辑表达式的结果为FALSE，则返回假表达式  </p>
+<p><strong>IDENTITY(dataType[, firstValue, stepValue]);</strong><br>定义：IDENTITY函数只用在INSERT INTO … SELECT … 语句中，将标识列插入到目标表中  </p>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>

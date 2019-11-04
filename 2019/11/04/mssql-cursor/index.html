@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server/">
+            Microsoft SQL Server
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        游标(Cursor)
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-04
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#basic">使用游标的基本步骤</a><br><a href="#declare">游标声明</a><br><a href="#parameter">游标参数</a><br><a href="#open">打开游标</a><br><a href="#operation">使用游标</a><br><a href="#example">游标示例</a><br><a href="#tips">游标技巧</a>  </p>
+<hr>
+<p><a name="basic"></a></p>
+<h2 id="使用游标的基本步骤"><a href="#使用游标的基本步骤" class="headerlink" title="使用游标的基本步骤"></a>使用游标的基本步骤</h2><ul>
+<li>声明游标  </li>
+<li>打开游标  </li>
+<li>使用游标操作数据  </li>
+<li>关闭游标  </li>
+<li>释放游标  </li>
+</ul>
+<hr>
+<p><a name="declare"></a></p>
+<h2 id="游标声明"><a href="#游标声明" class="headerlink" title="游标声明"></a>游标声明</h2><p><strong>创建格式</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DECLARE cursor_name CURSOR [ LOCAL | GLOBAL ]</span><br><span class="line">     [ FORWARD_ONLY | SCROLL ]</span><br><span class="line">     [ STATIC | KEYSET | DYNAMIC | FAST_FORWARD ]</span><br><span class="line">     [ READ_ONLY | SCROLL_LOCKS | OPTIMISTIC ]</span><br><span class="line">     [ TYPE_WARNING ]</span><br><span class="line">     FOR select_statement</span><br><span class="line">     [ FOR UPDATE [ OF column_name [ ,...n ] ] ]</span><br><span class="line">[;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建示例</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DECLARE My_cursor CURSOR FOR</span><br><span class="line">SELECT name,age FROM t_table    --定义时赋值</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DECLARE @游标名 CURSOR</span><br><span class="line">SET @游标名 = CURSOR FOR SELECT name, age FROM t_table     --定以后赋值(注意游标变量前的@符)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：若定义全局游标，只支持定义时赋值  </p>
+<hr>
+<p><a name="parameter"></a></p>
+<h2 id="游标参数"><a href="#游标参数" class="headerlink" title="游标参数"></a>游标参数</h2><p><strong>LOCAL和GLOBAL二选一</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--全局游标，跨GLOBAL</span><br><span class="line">DECLARE test_Cursor CURSOR GLOBAL FOR       </span><br><span class="line">SELECT * FROM Person</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--局部游标，跨LOCAL</span><br><span class="line">DECLARE test_Cursor2 CURSOR LOCAL FOR</span><br><span class="line">SELECT * FROM Person</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">--用GO结束上面的作用域</span><br><span class="line">GO</span><br><span class="line">OPEN test_Cursor</span><br><span class="line">OPEN test_Cursor2    --此行代码报错，游标不存在；局部游标不跨批处理，批处理结束后，将被隐式释放</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：如果不指定游标作用域，默认作用域为GLOBAL  </p>
+<p><strong>FORWARD_ONLY 和 SCROLL 二选一</strong>  </p>
+<ul>
+<li><p>FORWARD_ONLY：表示游标只能从数据集开始向数据集结束的方向读取，FETCH NEXT是唯一的选项  </p>
+</li>
+<li><p>SCROLL：表示游标可以在定义的数据集中任何方向或任何位置移动  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">--加Forward_Only</span><br><span class="line">DECLARE test_Cursor2 CURSOR FORWARD_ONLY FOR</span><br><span class="line">SELECT * FROM Person</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--加SCROLL</span><br><span class="line">DECLARE test_Cursor3 CURSOR SCROLL FOR</span><br><span class="line">SELECT * FROM Person</span><br><span class="line">OPEN test_Cursor2</span><br><span class="line">OPEN test_Cursor3</span><br><span class="line">FETCH LAST FROM test_Cursor2        　　--报错 fetch: 提取类型 last 不能与只进游标一起使用。</span><br><span class="line">FETCH LAST FROM test_Cursor3　　　　--正确执行</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>注意</strong>：不加参数默认为FORWARD_ONLY  </p>
+<p><strong>STATIC KEYSET DYNAMIC 和 FAST_FORWARD 四选一</strong>  </p>
+<ul>
+<li>STATIC：当游标被建立时，将会创建FOR后面的SELECT语句所包含数据集的副本存入tempdb数据库中，任何对于底层表内数据的更改不会影响到游标内容  </li>
+<li>DYNAMIC：和STATIC完全相反的选项，当底层数据库更改时，游标的内容也会随之得到反映，在下一次fecth中，数据内容会随之更改  </li>
+<li>KEYSET：可以理解为介于STATIC和DYNAMIC的折中方案，将游标所在结果集的唯一能确定每一行的主键存入tempdb，当结果集中任何行改变或者删除时，@@FETCH_STATUS会为-2，KEYSET无法探测新加入的数据  </li>
+<li>FAST_FORWARD：可以理解为FORWARD_ONLY的优化版本。FORWARD_ONLY执行的是静态计划，而FAST_FORWARD是根据情况进行选择采用动态计划还是静态计划，大多数情况下FAST_FORWARD要比FORWARD_ONLY性能略好  </li>
+</ul>
+<p><strong>READ_ONLY SCROLL_LOCKS OPTIMISTIC 三选一</strong>  </p>
+<ul>
+<li>READ_ONLY：意味着声明的游标只能读取数据，游标不能做任何更新操作  </li>
+<li>SCROLL_LOCKS：是另一种极端，将读入游标的所有数据进行锁定，防止其他程序进行更改，以确保更新的绝对成功  </li>
+<li>OPTIMISTIC：相对比较好的一个选择，OPTIMISTIC不锁定任何数据，当需要在游标中更新数据时，如果底层表数据更新，则游标内数据更新不成功，如果，底层表数据未更新，则游标内表数据可以更新  </li>
+</ul>
+<hr>
+<p><a name="open"></a></p>
+<h2 id="打开游标"><a href="#打开游标" class="headerlink" title="打开游标"></a>打开游标</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OPEN My_cursor</span><br><span class="line">DECLARE @name varcahr(8)</span><br><span class="line">DECLARE @age int</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong></p>
+<ul>
+<li>当游标被打开时，默认游标指针将指向该游标结果集的第一行之前，若要读取第一行，则需要把游标指向向下移动一行  </li>
+<li>当全局游标和局部游标变量重名时，默认会打开局部变量游标  </li>
+</ul>
+<hr>
+<p><a name="operation"></a></p>
+<h2 id="使用游标"><a href="#使用游标" class="headerlink" title="使用游标"></a>使用游标</h2><p><strong>基本格式</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">FETCH NEXT FROM My_cursor INTO @name,@age</span><br><span class="line">WHILE (@@FETCH_STATUS = 0)    --用while循环控制游标的活动</span><br><span class="line">BEGIN</span><br><span class="line">    PRINT &apos;name:  &apos; + @name</span><br><span class="line">    PRINT &apos;age:  &apos; + CAST(@age AS VARCHAR(3))</span><br><span class="line">    FETCH NEXT FROM My_cursor INTO @name,@age</span><br><span class="line">END</span><br><span class="line">CLOSE My_cursor    --关闭游标</span><br><span class="line">DEALLOCATE My_cursor  --释放游标(从内存中删除游标，释放系统内存资源)</span><br></pre></td></tr></table></figure>
+
+<p><strong>游标的移动</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">DECLARE test_Cursor CURSOR SCROLL FOR</span><br><span class="line">　　SELECT name FROM Person</span><br><span class="line">　　OPEN test_Cursor</span><br><span class="line">　　DECLARE @c NVARCHAR(10)</span><br><span class="line"> </span><br><span class="line">　　--取下一行</span><br><span class="line">　　FETCH NEXT FROM test_Cursor INTO @c</span><br><span class="line">　　PRINT @c</span><br><span class="line"> </span><br><span class="line">　　--取最后一行</span><br><span class="line">　　FETCH LAST FROM test_Cursor INTO @c</span><br><span class="line">　　PRINT @c</span><br><span class="line"> </span><br><span class="line">　　--取第一行</span><br><span class="line">　　FETCH FIRST FROM test_Cursor INTO @c</span><br><span class="line">　　PRINT @c</span><br><span class="line"> </span><br><span class="line">　　--取上一行</span><br><span class="line">　　FETCH PRIOR FROM test_Cursor INTO @c</span><br><span class="line">　　PRINT @c</span><br><span class="line"> </span><br><span class="line">　　--取第三行</span><br><span class="line">　　FETCH ABSOLUTE 3 FROM test_Cursor INTO @c</span><br><span class="line">　　PRINT @c</span><br><span class="line"> </span><br><span class="line">　　--取相对目前来说的上一行</span><br><span class="line">　　FETCH RELATIVE -1 FROM test_Cursor INTO @c</span><br><span class="line">　　PRINT @c</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：游标通常和全局变量@@FETCH_STATUS与WHILE循环一起使用，遍历游标指向的数据集  </p>
+<p><strong>示例</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">DECLARE test_Cursor CURSOR SCROLL FOR</span><br><span class="line">　　SELECT id,name FROM Person</span><br><span class="line">　　OPEN test_Cursor</span><br><span class="line"> </span><br><span class="line">　　DECLARE @id int</span><br><span class="line">　　DECLARE @name NVARCHAR(10)</span><br><span class="line"> </span><br><span class="line">　　WHILE @@FETCH_STATUS = 0   --0: FETCH语句执行成功; 1: FETCH语句执行失败; 2: 被提取的行不存在</span><br><span class="line">　　BEGIN</span><br><span class="line">　　PRINT @id</span><br><span class="line">　　PRINT @nem</span><br><span class="line"> </span><br><span class="line">　　FETCH NEXT FROM test_Cursor INTO @id,@name</span><br><span class="line"> </span><br><span class="line">　　END</span><br><span class="line"> </span><br><span class="line">　　CLOSE test_Cursor</span><br><span class="line">　　DEALLOCATE test_Cursor</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><a name="example"></a></p>
+<h2 id="游标示例"><a href="#游标示例" class="headerlink" title="游标示例"></a>游标示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">--声明游标</span><br><span class="line">DECLARE MyCursor CURSOR</span><br><span class="line"> </span><br><span class="line">--设置游标只读只前</span><br><span class="line">LOCAL STATIC Read_Only Forward_Only</span><br><span class="line"> </span><br><span class="line">FOR</span><br><span class="line"> </span><br><span class="line">--找到主键与要插入记录相同的Person表记录的主键</span><br><span class="line">SELECT Q.MANDT, Q.MATNR FROM</span><br><span class="line">(SELECT * FROM [dbo].[MATDIC]) insertData INNER JOIN V_MatnrDeclitem Q WITH(NOLOCK) ON insertData.COMCD = Q.MANDT AND Q.MANDT=&apos;9200&apos;</span><br><span class="line"> </span><br><span class="line">--打开游标</span><br><span class="line">OPEN MyCursor</span><br><span class="line"> </span><br><span class="line">--定义主键变量</span><br><span class="line">DECLARE @MANDTkey varchar(8), @MATNRkey varchar(20)</span><br><span class="line"> </span><br><span class="line">--游标从第0行开始下移一条记录的位置</span><br><span class="line">FETCH NEXT FROM MyCursor INTO @MANDTkey, @MATNRkey</span><br><span class="line"> </span><br><span class="line">--判断游标下移时是否有记录</span><br><span class="line">WHILE @@FETCH_STATUS = 0</span><br><span class="line">BEGIN</span><br><span class="line"> </span><br><span class="line">--游标当前位置指向的变量</span><br><span class="line">IF @MANDTkey IS NOT NULL AND @MATNRkey IS NOT NULL</span><br><span class="line"> </span><br><span class="line">--开始try内容</span><br><span class="line">BEGIN TRY</span><br><span class="line"> </span><br><span class="line">--开始事务，事务名为OK</span><br><span class="line">BEGIN TRAN OK</span><br><span class="line"> </span><br><span class="line">--删除主键相同的记录</span><br><span class="line">DELETE [dbo].[MATDIC] WHERE COMCD = @MANDTkey AND MATNR = @MATNRkey;</span><br><span class="line"> </span><br><span class="line">--提交事务，事务名为OK</span><br><span class="line">COMMIT TRAN OK</span><br><span class="line"> </span><br><span class="line">--结束try内容</span><br><span class="line">END TRY</span><br><span class="line"> </span><br><span class="line">--开始catch异常</span><br><span class="line">BEGIN CATCH</span><br><span class="line"> </span><br><span class="line">--若当前事务不可提交</span><br><span class="line">IF XACT_STATE()= -1</span><br><span class="line"> </span><br><span class="line">--回归事务，事务名为OK</span><br><span class="line">ROLLBACK TRAN OK</span><br><span class="line"> </span><br><span class="line">--结束catch异常</span><br><span class="line">END CATCH</span><br><span class="line"> </span><br><span class="line">--游标下移一个记录的位置</span><br><span class="line">FETCH NEXT FROM MyCursor INTO @MANDTkey, @MATNRkey</span><br><span class="line"> </span><br><span class="line">END</span><br><span class="line"> </span><br><span class="line">--关闭游标</span><br><span class="line">CLOSE MyCursor</span><br><span class="line"> </span><br><span class="line">--释放游标</span><br><span class="line">DEALLOCATE MyCursor</span><br><span class="line"> </span><br><span class="line">--插入数据</span><br><span class="line">INSERT INTO [dbo].[MATDIC] (COMCD, MATNR, DECITEM, E_I, CREDATE)</span><br><span class="line">            SELECT MANDT, MATNR, DECLITEM, E_I, GETDATE() FROM V_MatnrDeclitem WITH(NOLOCK) WHERE MANDT=&apos;9200&apos;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><a name="tips"></a></p>
+<h2 id="游标技巧"><a href="#游标技巧" class="headerlink" title="游标技巧"></a>游标技巧</h2><ul>
+<li>游标用完后一定要关闭、释放  </li>
+<li>避免在大数据集上使用游标  </li>
+<li>尽量使用FAST_FORWARD定义游标  </li>
+<li>避免使用insensitive, static和keyset参数定义游标  </li>
+<li>游标是在while，子句，临时表，函数，表变量等最后的无奈之选  </li>
+<li>游标是邪恶的！  </li>
+</ul>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
