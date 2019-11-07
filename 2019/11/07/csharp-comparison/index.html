@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/C/">
+            C#
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        C# 相等性比较
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-07
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#value">值类型比较</a><br><a href="#object">引用类型比较</a><br><a href="#string">字符串类型比较</a><br><a href="#sequence">Sequence比较</a><br><a href="#hashset">HashSet比较</a><br><a href="#datetime">DateTime比较</a><br><a href="#uri">Uri比较</a><br><a href="#guid">Guid比较</a><br><a href="#type">Type比较</a><br><a href="#intptr">IntPtr比较</a>  </p>
+<hr>
+<p><a name="value"></a></p>
+<h2 id="值类型比较"><a href="#值类型比较" class="headerlink" title="值类型比较"></a>值类型比较</h2><p>运算符：相等运算符 ==<br>定义：如果操作数相等，等于运算符 == 返回 true，否则返回 false<br>格式：a == b<br>返回值注解：如果置值类型的值相等，则其操作数相等<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators#value-types-equality" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators#value-types-equality</a>  </p>
+<hr>
+<p><a name="object"></a></p>
+<h2 id="引用类型比较"><a href="#引用类型比较" class="headerlink" title="引用类型比较"></a>引用类型比较</h2><p>方法：Object.ReferenceEquals<br>定义：确定指定的 Object 实例是否是相同的实例<br>格式：public static bool ReferenceEquals (object objA, object objB);<br>返回值注解：如果 objA 是与 objB 相同的实例，或两者均为 null，则为 true；否则为 false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators#reference-types-equality" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators#reference-types-equality</a>  </p>
+<hr>
+<p><a name="string"></a></p>
+<h2 id="字符串类型比较"><a href="#字符串类型比较" class="headerlink" title="字符串类型比较"></a>字符串类型比较</h2><p>方法：String.Compare<br>定义：比较两个指定的String对象，并返回一个指示二者在排序顺序中的相对位置的整数<br>格式：public static int Compare (string strA, string strB)<br>返回值注解：Compare 方法的所有重载返回一个 32 位有符号整数，指示两个比较数之间的词法关系:  </p>
+<ul>
+<li>小于零 在排序顺序中，第一个子字符串在第二个子字符串之前  </li>
+<li>零 子字符串在排序顺序中出现的位置相同或 length 为零  </li>
+<li>大于零 第一个子字符串在排序顺序中后跟第二个子字符串<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.string.compare?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.string.compare?view=netframework-4.8</a>  </li>
+</ul>
+<p>方法：String.CompareOrdinal<br>定义：通过计算每个字符串中相应 String 对象的数值来比较两个 Char 对象<br>格式：public static int CompareOrdinal (string strA, string strB);<br>返回值注解：一个整数，指示两个比较字之间的词法关系：  </p>
+<ul>
+<li>小于零 strA 小于 strB  </li>
+<li>零 strA 与 strB 相等  </li>
+<li>大于零 strA 大于 strB<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.string.compareordinal?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.string.compareordinal?view=netframework-4.8</a>  </li>
+</ul>
+<p>方法：String.CompareTo<br>定义：将此实例与指定对象或 String 进行比较，并返回一个整数，该整数指示此实例在排序顺序中是位于指定对象或 String 之前、之后还是与其出现在同一位置<br>格式：public int CompareTo (string strB);<br>返回值注解：一个 32 位带符号整数，该整数指示此实例在排序顺序中是位于 strB 参数之前、之后还是与其出现在同一位置：  </p>
+<ul>
+<li>小于零 此实例位于 strB 之前  </li>
+<li>零 此实例在排序顺序中的位置与 strB 相同  </li>
+<li>大于零 此实例位于 strB 之后。 或 strB 为 null<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.string.compareto?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.string.compareto?view=netframework-4.8</a>  </li>
+</ul>
+<p>方法：String.Equals<br>定义：确定两个 String 对象是否具有相同的值<br>格式：public bool Equals (string value);<br>返回值注解：如果 true 参数的值与此实例的值相同，则为 value；否则为 false。 如果 value 为 null，则此方法返回 false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.string.equals?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.string.equals?view=netframework-4.8</a>  </p>
+<hr>
+<p><a name="sequence"></a></p>
+<h2 id="Sequence比较"><a href="#Sequence比较" class="headerlink" title="Sequence比较"></a>Sequence比较</h2><p>方法：Queryable.SequenceEqual<br>定义：确定两个序列是否相等<br>格式：public static bool SequenceEqual<TSource> (this System.Linq.IQueryable<TSource> source1, System.Collections.Generic.IEnumerable<TSource> source2);<br>返回值注解：如果两个源序列的长度相等并且它们的对应元素也相等，则为 true；否则为 false<br>注意：该方法的第一个参数类需要实现IQueryable接口，如果参数实现了IEnumeralbe，使用Queryable.AsQueryable方法将 IEnumerable 转换为 IQueryable<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.linq.queryable.sequenceequal?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.linq.queryable.sequenceequal?view=netframework-4.8</a>  </p>
+<hr>
+<p><a name="hashset"></a></p>
+<h2 id="HashSet比较"><a href="#HashSet比较" class="headerlink" title="HashSet比较"></a>HashSet比较</h2><p>方法：HashSet<T>.SetEquals<br>定义：确定是否 HashSet<T> 对象和指定集合包含相同的元素<br>格式：public bool SetEquals (System.Collections.Generic.IEnumerable<T> other);<br>返回值注解：如果 HashSet<T> 对象等于 other，则为 true；否则为 false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.generic.hashset-1.setequals?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.collections.generic.hashset-1.setequals?view=netframework-4.8</a>  </p>
+<hr>
+<p><a name="datetime"></a></p>
+<h2 id="DateTime比较"><a href="#DateTime比较" class="headerlink" title="DateTime比较"></a>DateTime比较</h2><p>方法：DateTime.Compare<br>定义：对两个DateTime的实例进行比较，并返回一个指示第一个实力是早于、等于还是晚于第二个实例的整数<br>格式：public static int Compare (DateTime t1, DateTime t2);<br>返回值注解：有符号数字，指示 t1 和 t2 的相对值  </p>
+<ul>
+<li>小于零        t1 早于 t2  </li>
+<li>等于零        t1 与 t2 相同  </li>
+<li>大于零        t1 晚于 t2<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime.compare?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime.compare?view=netframework-4.8</a>  </li>
+</ul>
+<p>方法：DateTime.Compareto<br>定义：将此实例的值与指定的DateTime值比较，并指示此实例是早于、等于还是晚于指定的DateTime值<br>格式：public int CompareTo (DateTime value);<br>返回值注解：有符号数字，指示此实例和value参数的相对值  </p>
+<ul>
+<li>小于零        此实例早于 value  </li>
+<li>零        此实例与 value 相同  </li>
+<li>大于零        此实例晚于 value<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime.compareto?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime.compareto?view=netframework-4.8</a>  </li>
+</ul>
+<p>方法：DateTime.Equals<br>定义：返回一个值，该值指示两个DateTime对象，或者一个DateTime实例和另一个对象或DateTime是否具有相同的值<br>格式：public bool Equals (DateTime value)<br>返回值注解：如果value参数与此实例的值相等，则为true；否则为false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime.equals?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.datetime.equals?view=netframework-4.8</a>  </p>
+<hr>
+<p><a name="uri"></a></p>
+<h2 id="Uri比较"><a href="#Uri比较" class="headerlink" title="Uri比较"></a>Uri比较</h2><p>方法：Uri.Compare<br>定义：使用指定的比较规则比较两个URI的指定部分<br>格式：public static  int Compare(Uri uri1, Uri uri2, UriCompents partsToCompare, UriFormat compareFormat, StringComparison comparisonType);<br>返回值注解：一个Int32值，指示进行比较的URI部分之间的此法关系  </p>
+<ul>
+<li>小于零        uri1 小于 uri2  </li>
+<li>零        uri1 等于 uri2  </li>
+<li>大于零        uri1 大于 uri2<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.uri.compare?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.uri.compare?view=netframework-4.8</a>  </li>
+</ul>
+<p>方法：Uri.Equals<br>定义：比较两个Uri实例是否相等<br>格式：public override bool Equals(object compared);<br>返回值注解：一个Boolean值。如果两个实例表示相同的URI，则该值为true；否则为false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.uri.equals?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.uri.equals?view=netframework-4.8</a>  </p>
+<p>运算符：相等运算符==<br>定义：确定两个Uri实例是否具有相同的值<br>格式：public static bool operator == (Uri uri1, Uri uri2);<br>返回值注解：一个Boolean值。如果这两个Uri实例是等效的，则该值为true；否则为false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.uri.op_equality?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.uri.op_equality?view=netframework-4.8</a>  </p>
+<hr>
+<p><a name="guid"></a></p>
+<h2 id="Guid比较"><a href="#Guid比较" class="headerlink" title="Guid比较"></a>Guid比较</h2><p>方法：Guid.ComapreTo<br>定义：将此实例与指定的对象或Guid进行比较，并返回二者相对值的指示<br>格式：public int CompareTo (Guid value);<br>返回值注解：一个带符号数字，指示此实例和value的相对值  </p>
+<ul>
+<li>负整数    此实例小于 value  </li>
+<li>零        此实例等于 value  </li>
+<li>正整数    此实例大于 value<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.guid.compareto?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.guid.compareto?view=netframework-4.8</a>  </li>
+</ul>
+<p>方法：Guid.Equals<br>定义：返回一个值，该值指示Guid的两个实例是否表示同一个值<br>格式：public bool Equals (Guid g);<br>返回值注解：如果g与该实例相等，则为true；否则为false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.guid.equals?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.guid.equals?view=netframework-4.8</a>  </p>
+<hr>
+<p><a name="type"></a></p>
+<h2 id="Type比较"><a href="#Type比较" class="headerlink" title="Type比较"></a>Type比较</h2><p>方法：Type.Equals<br>定义：确定当前Type的基础系统类型是否与指定Object或Type的基础系统类型相同<br>格式：public virtual bool Equals(Type o);<br>返回值注解：如果o的基础系统类型与当前 Type 的基础系统类型相同，则为 true；否则为 false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.type.equals?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.type.equals?view=netframework-4.8</a>  </p>
+<hr>
+<p><a name="intptr"></a></p>
+<h2 id="IntPtr比较"><a href="#IntPtr比较" class="headerlink" title="IntPtr比较"></a>IntPtr比较</h2><p>方法：IntPtr.Equals<br>定义：返回一个值，该值指示此实例是否等于指定的对象<br>格式：public override bool Equals (object obj);<br>返回值注解：如果 obj 是 IntPtr 的实例并且等于此实例的值，则为 true；否则为 false<br>详细内容及使用示例：<a href="https://docs.microsoft.com/zh-cn/dotnet/api/system.intptr.equals?view=netframework-4.8" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/api/system.intptr.equals?view=netframework-4.8</a>  </p>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
