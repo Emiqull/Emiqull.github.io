@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
+            Microsoft SQL Server Key Words
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        VALUES
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-11
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#multiple">插入多条记录</a><br><a href="#result">表示结果集</a>  </p>
+<hr>
+<p><a name="multiple"></a></p>
+<h2 id="插入多条记录"><a href="#插入多条记录" class="headerlink" title="插入多条记录"></a>插入多条记录</h2><p><strong>单个INSERT语句插入多条记录</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSERT INTO Demo_Values </span><br><span class="line">(DName,DCode,DDate) </span><br><span class="line">VALUES</span><br><span class="line">(&apos;DemoA&apos;,&apos;AAA&apos;,GETDATE()), </span><br><span class="line">(&apos;DemoB&apos;,&apos;BBB&apos;,GETDATE()), </span><br><span class="line">(&apos;DemoC&apos;,&apos;CCC&apos;,GETDATE()), </span><br><span class="line">(&apos;DemoD&apos;,&apos;DDD&apos;,GETDATE()), </span><br><span class="line">(&apos;DemoE&apos;,&apos;EEE&apos;,GETDATE());</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><a name="result"></a></p>
+<h2 id="表示结果集"><a href="#表示结果集" class="headerlink" title="表示结果集"></a>表示结果集</h2><p><strong>不使用永久表或临时表而表示一个结果集</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT DName,DCode,DDate </span><br><span class="line">FROM</span><br><span class="line">(VALUES </span><br><span class="line">(&apos;A&apos;,&apos;AAA&apos;,GETDATE()), </span><br><span class="line">(&apos;B&apos;,&apos;BBB&apos;,GETDATE()), </span><br><span class="line">(&apos;C&apos;,&apos;CCC&apos;,GETDATE()), </span><br><span class="line">(&apos;D&apos;,&apos;DDD&apos;,GETDATE()), </span><br><span class="line">(&apos;E&apos;,&apos;EEE&apos;,GETDATE())</span><br><span class="line">)</span><br><span class="line">Demo_Values (DName,DCode,DDate);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/mssql/c_16.png" alt="">  </p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>Demo_Values表名定义了结果集显示的列个数、列名称  </li>
+<li>FROM()中的定义了要显示结果集源纪录，其中VALUES()值的列类型、列个数要与Demo_Values表定义的一致或相适应  </li>
+</ul>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Key-Words/">Microsoft SQL Server Key Words</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
