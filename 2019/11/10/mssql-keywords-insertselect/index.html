@@ -110,40 +110,62 @@
     </div>
 </header>
         <main class="main">
-            
-<section class="posts">
+            <article class="post">
     
-        <article class="post">
-            
-                <h4 class="post-cat">
-                    <a href="/categories/C/">
-                        C#
-                    </a>
-                </h4>
-                
-                    <h1 class="post-title">
-                        <a href="/2019/11/07/csharp-comparison/">
-                            C# 相等性比较
-                        </a>
-                    </h1>
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
+            Microsoft SQL Server Key Words
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        INSERT INTO 和 SELECT INTO
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-10
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#format">语法格式</a><br><a href="#difference">语法区别</a><br><a href="#appling">语法应用</a>  </p>
+<hr>
+<p><a name="format"></a></p>
+<h2 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h2><ul>
+<li>INSERT INTO … SELECT … ：INSERT INTO TargetTable[(field … )] SELECT … ;  </li>
+<li>SELECT …INTO ：SELECT field … INTO TargetTable FROM SourceTable;  </li>
+</ul>
+<hr>
+<p><a name="difference"></a></p>
+<h2 id="语法区别"><a href="#语法区别" class="headerlink" title="语法区别"></a>语法区别</h2><ul>
+<li><p>INSERT INTO … SELECT … 语句要求目标表必须已经存在，SELECT …INTO 语句要求目标表必须不存在  </p>
+<ul>
+<li>INSERT INTO … SELECT … 语句中，因为目标表已经存在，所以执行时还可以向表中插入常量  </li>
+<li>INSERT INTO … SELECT … 语句中，若目标表中存在主键，则字段中一定要存在主键字段  </li>
+<li>INSERT INTO … SELECT … 语句中，目标表与源表的表结构要相同(数值的varcahr类型转换成int类型可以成功解析)  </li>
+</ul>
+</li>
+<li><p>INSERT INTO … SELECT … 语句是循环查询结果集的每行，插入到已存在的表中；SELECT …INTO 语句是把查询结果集直接保存成表  </p>
+<ul>
+<li>SELECT …INTO 语句在执行时，会自动创建目标表并插入数据  </li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><a name="appling"></a></p>
+<h2 id="语法应用"><a href="#语法应用" class="headerlink" title="语法应用"></a>语法应用</h2><ul>
+<li>若需要对表的数据进行备份，且追求效率，建议使用SELECT …INTO 语句  </li>
+</ul>
+<hr>
+<p><a href="#top">返回顶部</a></p>
 
-                    <ul class="post-date">
-                        <li>
-                            November 7, 2019
-                        </li>
-                        <li>
-                            Emiqull
-                        </li>
-                    </ul>
-                    
-                    <div class="post-content ">
-                        
-                            <a href="/2019/11/07/csharp-comparison/" class="more-link">Continue reading</a>
-                    </div>
-        </article>
-        
-</section>
-
+    </div>
+</article>
         </main>
         <aside class="aside">
             <div class="close"></div>

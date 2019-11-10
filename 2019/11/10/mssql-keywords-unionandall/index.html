@@ -110,40 +110,61 @@
     </div>
 </header>
         <main class="main">
-            
-<section class="posts">
+            <article class="post">
     
-        <article class="post">
-            
-                <h4 class="post-cat">
-                    <a href="/categories/C/">
-                        C#
-                    </a>
-                </h4>
-                
-                    <h1 class="post-title">
-                        <a href="/2019/11/07/csharp-comparison/">
-                            C# 相等性比较
-                        </a>
-                    </h1>
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
+            Microsoft SQL Server Key Words
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        UNION 和 UNION ALL
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-10
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#format">语法格式</a><br><a href="#difference">语法区别</a><br><a href="#appling">语法应用</a>  </p>
+<hr>
+<p><a name="format"></a></p>
+<h2 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h2><ul>
+<li>UNION：SELECT … UNION SELECT … ;  </li>
+<li>UNION ALL：SELECT … UNION ALL SELECT … ;  </li>
+</ul>
+<hr>
+<p><a name="difference"></a></p>
+<h2 id="语法区别"><a href="#语法区别" class="headerlink" title="语法区别"></a>语法区别</h2><ul>
+<li><p>UNION是对多个SELECT查询结果集的列数据进行合并，并对合并后的结果集去除重复行且默认按照第一条SELECT语句的第一列的值进行升序排列  </p>
+<ul>
+<li>若第一条SELECT语句查询的是<em>，则默认</em>先转换成所有列，再按照所有列的第一列进行排序  </li>
+<li>对UNION连接后的最终结果集的排序，只能在UNION连接的最后一个SELECT语句末尾添加  </li>
+</ul>
+</li>
+<li><p>UNION ALL 仅仅对多个SELECT查询结果集的列数据进行合并  </p>
+<ul>
+<li>对UNION ALL连接后的最终结果集的排序，只能在UNION ALL连接的最后一个SELECT语句末尾添加  </li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><a name="appling"></a></p>
+<h2 id="语法应用"><a href="#语法应用" class="headerlink" title="语法应用"></a>语法应用</h2><ul>
+<li>为了更好的利用系统资源，如果多个SELECT语句的结果，在确定不需要去除重复行、对连接后的结果集不需要排序后，建议使用UNION ALL连接  </li>
+</ul>
+<hr>
+<p><a href="#top">返回顶部</a></p>
 
-                    <ul class="post-date">
-                        <li>
-                            November 7, 2019
-                        </li>
-                        <li>
-                            Emiqull
-                        </li>
-                    </ul>
-                    
-                    <div class="post-content ">
-                        
-                            <a href="/2019/11/07/csharp-comparison/" class="more-link">Continue reading</a>
-                    </div>
-        </article>
-        
-</section>
-
+    </div>
+</article>
         </main>
         <aside class="aside">
             <div class="close"></div>

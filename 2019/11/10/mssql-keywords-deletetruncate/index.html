@@ -110,40 +110,69 @@
     </div>
 </header>
         <main class="main">
-            
-<section class="posts">
+            <article class="post">
     
-        <article class="post">
-            
-                <h4 class="post-cat">
-                    <a href="/categories/C/">
-                        C#
-                    </a>
-                </h4>
-                
-                    <h1 class="post-title">
-                        <a href="/2019/11/07/csharp-comparison/">
-                            C# 相等性比较
-                        </a>
-                    </h1>
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
+            Microsoft SQL Server Key Words
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        DELETE 和 TRUNCATE
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-10
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#format">语法格式</a><br><a href="#difference">语法区别</a><br><a href="#appling">语法应用</a>  </p>
+<hr>
+<p><a name="format"></a></p>
+<h2 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h2><ul>
+<li>DELETE格式：DELETE FROM 表名 [WHERE … ];  </li>
+<li>TRUNCATE格式：TRUNCATE TABLE  表名;  </li>
+</ul>
+<hr>
+<p><a name="difference"></a></p>
+<h2 id="语法区别"><a href="#语法区别" class="headerlink" title="语法区别"></a>语法区别</h2><ul>
+<li><p>TRUNCATE比DELETE执行删除操作，使用的事务日志空间更少  </p>
+<ul>
+<li>DELETE是一行一行的删除表记录，并把每一次的删除操作都记录到日志文件  </li>
+<li>TRUNCATE删除，是以页为单位进行操作，在日志文件的记录中，仅仅记录释放每一页的动作，不会记录每一行的操作  </li>
+</ul>
+</li>
+<li><p>TRUNCATE比DELETE执行删除时，使用的锁要少  </p>
+<ul>
+<li>DELETE由于是一行一行的删除，所以需要对处理的行进行加锁，而且是行锁；TRUNCATE操作由于是对页操作，所以只需要页锁或表锁  </li>
+</ul>
+</li>
+<li><p>TRUNCATE删除表是清空表记录，DELETE删除表是删除记录中的内容  </p>
+<ul>
+<li>TRUNCATE删除表只可以删除整张表  </li>
+<li>DELETE删除表数据后，表中会存在占用空间的空白页(若表存在聚集索引，删除后只剩下一个页和一个区)，空白页会在新数据的插入后重用  </li>
+<li>TRUNCATE删除表中所有的记录后，会同时清空所有的空白页，但是会保留表的结构、索引、约束等  </li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><a name="appling"></a></p>
+<h2 id="语法应用"><a href="#语法应用" class="headerlink" title="语法应用"></a>语法应用</h2><ul>
+<li>为了更好的删除表后的占用空间，建议在表中创建聚集索引  </li>
+<li>若确定所有的表数据都不需要，建议先使用TRUNCATE删除表记录后，再使用DROP TABLE删除表  </li>
+</ul>
+<hr>
+<p><a href="#top">返回顶部</a></p>
 
-                    <ul class="post-date">
-                        <li>
-                            November 7, 2019
-                        </li>
-                        <li>
-                            Emiqull
-                        </li>
-                    </ul>
-                    
-                    <div class="post-content ">
-                        
-                            <a href="/2019/11/07/csharp-comparison/" class="more-link">Continue reading</a>
-                    </div>
-        </article>
-        
-</section>
-
+    </div>
+</article>
         </main>
         <aside class="aside">
             <div class="close"></div>
