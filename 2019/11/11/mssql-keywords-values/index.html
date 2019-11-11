@@ -143,7 +143,7 @@
 <p><a name="result"></a></p>
 <h2 id="表示结果集"><a href="#表示结果集" class="headerlink" title="表示结果集"></a>表示结果集</h2><p><strong>不使用永久表或临时表而表示一个结果集</strong>  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT DName,DCode,DDate </span><br><span class="line">FROM</span><br><span class="line">(VALUES </span><br><span class="line">(&apos;A&apos;,&apos;AAA&apos;,GETDATE()), </span><br><span class="line">(&apos;B&apos;,&apos;BBB&apos;,GETDATE()), </span><br><span class="line">(&apos;C&apos;,&apos;CCC&apos;,GETDATE()), </span><br><span class="line">(&apos;D&apos;,&apos;DDD&apos;,GETDATE()), </span><br><span class="line">(&apos;E&apos;,&apos;EEE&apos;,GETDATE())</span><br><span class="line">)</span><br><span class="line">Demo_Values (DName,DCode,DDate);</span><br></pre></td></tr></table></figure>
-<p><img src="/images/mssql/c_16.png" alt="">  </p>
+<p><img src="/images/c_16.png" alt=""></p>
 <p><strong>注意：</strong></p>
 <ul>
 <li>Demo_Values表名定义了结果集显示的列个数、列名称  </li>
