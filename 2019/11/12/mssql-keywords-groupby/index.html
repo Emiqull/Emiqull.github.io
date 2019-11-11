@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
+            Microsoft SQL Server Key Words
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        GROUP BY
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-12
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#sample">示例数据</a><br><a href="#cube">CUBE</a><br><a href="#rollup">ROLLUP</a><br><a href="#grouping">GROUPING SETS</a><br><a href="#groupingandcube">GROUPING &amp; CUBE</a><br><a href="#idandcube">GROUPING_ID &amp; CUBE</a>  </p>
+<hr>
+<p><a name="sample"></a></p>
+<h2 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">IF NOT OBJECT_ID(&apos;tb_Income&apos;) IS NULL </span><br><span class="line">DROP TABLE [tb_Income];</span><br><span class="line"> </span><br><span class="line">CREATE TABLE [dbo].[tb_Income]( </span><br><span class="line">[TeamID] int not null, </span><br><span class="line">[PName] [Nvarchar](20) NOT NULL, </span><br><span class="line">[CYear] Smallint NOT NULL, </span><br><span class="line">[CMonth] TinyInt NOT NULL, </span><br><span class="line">[CMoney] Decimal (10,2) Not Null </span><br><span class="line">) </span><br><span class="line">GO;</span><br><span class="line"> </span><br><span class="line">INSERT [dbo].[tb_Income] </span><br><span class="line">SELECT 1,N&apos;胡一刀&apos;,2011,2,5600 </span><br><span class="line">union ALL SELECT 1,N&apos;胡一刀&apos;,2011,1,5678 </span><br><span class="line">union ALL SELECT 1,N&apos;胡一刀&apos;,2011,3,6798 </span><br><span class="line">union ALL SELECT 2,N&apos;胡一刀&apos;,2011,4,7800 </span><br><span class="line">union ALL SELECT 2,N&apos;胡一刀&apos;,2011,5,8899 </span><br><span class="line">union ALL SELECT 3,N&apos;胡一刀&apos;,2012,8,8877 </span><br><span class="line"> </span><br><span class="line">union ALL SELECT 1,N&apos;苗人凤&apos;,2011,1,3455 </span><br><span class="line">union ALL SELECT 1,N&apos;苗人凤&apos;,2011,2,4567 </span><br><span class="line">union ALL SELECT 2,N&apos;苗人凤&apos;,2011,3,5676 </span><br><span class="line">union ALL SELECT 3,N&apos;苗人凤&apos;,2011,4,5600 </span><br><span class="line">union ALL SELECT 2,N&apos;苗人凤&apos;,2011,5,6788 </span><br><span class="line">union ALL SELECT 2,N&apos;苗人凤&apos;,2012,6,5679 </span><br><span class="line">union ALL SELECT 2,N&apos;苗人凤&apos;,2012,7,6785 </span><br><span class="line"> </span><br><span class="line">union ALL SELECT 2,N&apos;张无忌&apos;,2011,2,5600 </span><br><span class="line">union ALL SELECT 2,N&apos;张无忌&apos;,2011,3,2345 </span><br><span class="line">union ALL SELECT 2,N&apos;张无忌&apos;,2011,5,12000 </span><br><span class="line">union ALL SELECT 3,N&apos;张无忌&apos;,2011,4,23456 </span><br><span class="line">union ALL SELECT 3,N&apos;张无忌&apos;,2011,6,4567 </span><br><span class="line">union ALL SELECT 1,N&apos;张无忌&apos;,2012,7,6789 </span><br><span class="line">union ALL SELECT 1,N&apos;张无忌&apos;,2012,8,9998 </span><br><span class="line"> </span><br><span class="line">union ALL SELECT 3,N&apos;赵半山&apos;,2011,7,6798 </span><br><span class="line">union ALL SELECT 3,N&apos;赵半山&apos;,2011,10,10000 </span><br><span class="line">union ALL SELECT 3,N&apos;赵半山&apos;,2011,9,12021 </span><br><span class="line">union ALL SELECT 2,N&apos;赵半山&apos;,2012,11,8799 </span><br><span class="line">union ALL SELECT 1,N&apos;赵半山&apos;,2012,12,10002 </span><br><span class="line"> </span><br><span class="line">union ALL SELECT 3,N&apos;令狐冲&apos;,2011,8,7896 </span><br><span class="line">union ALL SELECT 3,N&apos;令狐冲&apos;,2011,9,7890 </span><br><span class="line">union ALL SELECT 2,N&apos;令狐冲&apos;,2011,10,7799 </span><br><span class="line">union ALL SELECT 2,N&apos;令狐冲&apos;,2011,11,9988 </span><br><span class="line">union ALL SELECT 2,N&apos;令狐冲&apos;,2012,9,34567 </span><br><span class="line">union ALL SELECT 3,N&apos;令狐冲&apos;,2012,12,5609</span><br><span class="line">GO</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><a name="cube"></a></p>
+<h2 id="CUBE"><a href="#CUBE" class="headerlink" title="CUBE"></a>CUBE</h2><p><strong>TSQL 01</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID, SUM(CMoney) as 总收入, AVG(CMoney) as 平均收入, COUNT(1) as 总个数</span><br><span class="line">FROM tb_Income</span><br><span class="line">GROUP BY CUBE (TeamID);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_17.png" alt="">  </p>
+<p><strong>注解：</strong><br>使用CUBE执行的汇总操作，查询结果集会增加一行记录，CUBE分组后的第一列(这里即是TeamID列)为NULL，其他查询列按照相应的聚合函数进行汇总统计(总收入按照SUM、平均收入按照AVG、总个数按照COUNT)  </p>
+<p><strong>TSQL 02</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID, PName as 姓名, SUM(CMoney) as 总收入, AVG(CMoney) as 平均收入, COUNT(1) as 总个数</span><br><span class="line">FROM tb_Income</span><br><span class="line">GROUP BY CUBE (TeamID,PName);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_18.png" alt="">  </p>
+<p><strong>注解：</strong>  </p>
+<ul>
+<li>使用CUBE执行多分组的汇总操作，查询结果集会在每次分组后增加一行记录，且该记录的分组中第一列为NULL，其他查询列按照相应的聚合函数进行汇总统计  </li>
+<li>然后再增加一行所有分组列为NULL，其他查询列按照相应的聚合函数进行汇总的记录  </li>
+<li>最后在增加按照CUBE分组列的第一列分组，CUBE第一列之外的为NULL，其他列按照相应的聚合函数进行汇总的记录  </li>
+</ul>
+<hr>
+<p><a name="rollup"></a></p>
+<h2 id="ROLLUP"><a href="#ROLLUP" class="headerlink" title="ROLLUP"></a>ROLLUP</h2><p><strong>TSQL 01</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID, SUM(CMoney) as 总收入, AVG(CMoney) as 平均收入, COUNT(1) as 总个数</span><br><span class="line">FROM tb_Income</span><br><span class="line">GROUP BY ROLLUP (TeamID);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_19.png" alt="">  </p>
+<p><strong>TSQL 02</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID, PName as 姓名, SUM(CMoney) as 总收入, AVG(CMoney) as 平均收入, COUNT(1) as 总个数</span><br><span class="line">FROM tb_Income</span><br><span class="line">GROUP BY ROLLUP (TeamID,PName);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_20.png" alt="">  </p>
+<p><strong>注解：</strong>  </p>
+<ul>
+<li>使用ROLLUP执行多分组的汇总操作，查询结果集会在每次分组后增加一行记录，且该记录的分组中除第一列为NULL，其他查询列按照相应的聚合函数进行汇总统计  </li>
+<li>然后再增加一行所有分组列为NULL，其他查询列按照相应的聚合函数进行汇总的记录  </li>
+</ul>
+<p><strong>注意：</strong>使用ROLLUP执行分组查询的结果集的陈列顺序，与ROLLUP分组的列顺序有关  </p>
+<hr>
+<p><a name="grouping"></a></p>
+<h2 id="GROUPING-SETS"><a href="#GROUPING-SETS" class="headerlink" title="GROUPING SETS"></a>GROUPING SETS</h2><p><strong>TSQL 01</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID, SUM(CMoney) as 总收入, AVG(CMoney) as 平均收入, COUNT(1) as 总个数</span><br><span class="line">FROM tb_Income</span><br><span class="line">GROUP BY GROUPING SETS (TeamID);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_21.png" alt="">  </p>
+<p><strong>注解：</strong>按照TeamID进行分组  </p>
+<p><strong>TSQL 02</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID, PName as 姓名, SUM(CMoney) as 总收入, AVG(CMoney) as 平均收入, COUNT(1) as 总个数</span><br><span class="line">FROM tb_Income</span><br><span class="line">GROUP BY GROUPING SETS (TeamID,PName);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_22.png" alt="">  </p>
+<p><strong>注解：</strong>分别按照GROUPING SETS分组列分组，显示查询结果集  </p>
+<p><strong>TSQL 03</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID, CYear as 年份, PName as 姓名, SUM(CMoney) as 总收入, AVG(CMoney) as 平均收入, COUNT(1) as 总个数</span><br><span class="line">FROM tb_Income</span><br><span class="line">GROUP BY GROUPING SETS ((TeamID),(CYear,PName),(TeamID,PName));</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_23.png" alt="">  </p>
+<p><strong>注解：</strong>分别按照GROUPING SETS分组列进行不同的分组，若不同的分组列中与其他的分组列有重复列的情况时，查询结果集会相互交替显示  </p>
+<hr>
+<p><a name="groupingandcube"></a></p>
+<h2 id="GROUPING-amp-CUBE"><a href="#GROUPING-amp-CUBE" class="headerlink" title="GROUPING &amp; CUBE"></a>GROUPING &amp; CUBE</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID,CYear as 年份, </span><br><span class="line">CASE WHEN GROUPING(TeamID)=0 AND GROUPING(CYear)=1 THEN N&apos;小组汇总&apos; </span><br><span class="line">WHEN GROUPING(TeamID)=1 AND GROUPING(CYear)=0 THEN N&apos;年份汇总&apos; </span><br><span class="line">WHEN GROUPING(TeamID)=1 AND GROUPING(CYear)=1 THEN N&apos;所有汇总&apos; </span><br><span class="line">ELSE N&apos;正常行&apos;</span><br><span class="line">END as 行类别,</span><br><span class="line">SUM(CMoney) 总收入 </span><br><span class="line">FROM tb_Income </span><br><span class="line">GROUP BY CUBE (TeamID,CYear);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_24.png" alt="">  </p>
+<p><strong>注解：</strong>  </p>
+<ul>
+<li>在按照CUBE进行分组的基础上，使用GROUPING(指定列)对记录结果进行判断输出  </li>
+<li>GROUPING()的判断内容可以看做0或1的二进制，并返回运算结果的整数形式。NULL是1，非NULL是0  </li>
+</ul>
+<hr>
+<p><a name="idandcube"></a></p>
+<h2 id="GROUPING-ID-amp-CUBE"><a href="#GROUPING-ID-amp-CUBE" class="headerlink" title="GROUPING_ID &amp; CUBE"></a>GROUPING_ID &amp; CUBE</h2><p><strong>前提：</strong><br>为了更清楚的说明问题，使用GROUPING_ID之前，修改一下表结构，增加一个字段  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tb_Income ADD AreaID int null;</span><br><span class="line">UPDATE tb_Income SET AreaID=TeamID+CMonth%5+CYear%2;</span><br></pre></td></tr></table></figure>
+
+<p><strong>TSQL:</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SELECT TeamID as 小组ID,AreaID as 地点ID,CMonth as 月份, </span><br><span class="line">CASE GROUPING_ID(TeamID,AreaID,CMonth) </span><br><span class="line">WHEN 1 THEN N&apos;小组/地点汇总&apos; </span><br><span class="line">WHEN 2 THEN N&apos;小组/月份汇总&apos; </span><br><span class="line">WHEN 3 THEN N&apos;小组汇总&apos; </span><br><span class="line">WHEN 4 THEN N&apos;地点/月份汇总&apos; </span><br><span class="line">WHEN 5 THEN N&apos;地点汇总&apos; </span><br><span class="line">WHEN 6 THEN N&apos;月份汇总&apos; </span><br><span class="line">WHEN 7 THEN N&apos;所有汇总&apos; </span><br><span class="line">ELSE N&apos;正常行&apos; END as 行类别, </span><br><span class="line">SUM(CMoney) 总收入 </span><br><span class="line">FROM tb_Income  </span><br><span class="line">Where AreaID IN (3,5,6,7,8,9,2,4) AND CYear =2011  AND CMonth=2 </span><br><span class="line">GROUP BY CUBE (TeamID,AreaID,CMonth);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_25.png" alt="">  </p>
+<p><strong>注解：</strong><br>GROUPING_ID()的判断内容同样也可以看做0或1的二进制，并返回运算结果的整数形式。NULL是1，非NULL是0  </p>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Key-Words/">Microsoft SQL Server Key Words</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
