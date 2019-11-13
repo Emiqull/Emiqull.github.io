@@ -176,11 +176,11 @@
 <hr>
 <p><a name="time"></a></p>
 <h2 id="T-SQL执行时间"><a href="#T-SQL执行时间" class="headerlink" title="T-SQL执行时间"></a>T-SQL执行时间</h2><p>查询指定T-SQL执行时间(以毫秒为例)  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DECLARE @starttime datetime</span><br><span class="line">SET @starttime = GETDATE()</span><br><span class="line">--T-SQL Sentence</span><br><span class="line">SELECT DATEDIFF(MS,@starttime,GETDATE());</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span> @starttime datetime</span><br><span class="line"><span class="keyword">SET</span> @starttime = <span class="keyword">GETDATE</span>()</span><br><span class="line"><span class="comment">--T-SQL Sentence</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DATEDIFF</span>(MS,@starttime,<span class="keyword">GETDATE</span>());</span><br></pre></td></tr></table></figure>
 
 <hr>
 <p><a name="content"></a></p>
-<h2 id="查询包含执行文本的存储过程"><a href="#查询包含执行文本的存储过程" class="headerlink" title="查询包含执行文本的存储过程"></a>查询包含执行文本的存储过程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT ROUTINE_NAME, ROUTINE_DEFINITION</span><br><span class="line">FROM INFORMATION_SCHEMA.ROUTINES</span><br><span class="line">WHERE ROUTINE_DEFINITION LIKE &apos;%text%&apos;</span><br><span class="line">AND ROUTINE_TYPE=&apos;PROCEDURE&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="查询包含执行文本的存储过程"><a href="#查询包含执行文本的存储过程" class="headerlink" title="查询包含执行文本的存储过程"></a>查询包含执行文本的存储过程</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ROUTINE_NAME, ROUTINE_DEFINITION</span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.ROUTINES</span><br><span class="line"><span class="keyword">WHERE</span> ROUTINE_DEFINITION <span class="keyword">LIKE</span> <span class="string">'%text%'</span></span><br><span class="line"><span class="keyword">AND</span> ROUTINE_TYPE=<span class="string">'PROCEDURE'</span></span><br></pre></td></tr></table></figure>
 
 <hr>
 <p><a name="triggers"></a></p>
@@ -190,7 +190,7 @@
 <h2 id="查看指定触发器或存储过程的内容或自定义函数"><a href="#查看指定触发器或存储过程的内容或自定义函数" class="headerlink" title="查看指定触发器或存储过程的内容或自定义函数"></a>查看指定触发器或存储过程的内容或自定义函数</h2><p>EXEC sp_helptext 触发器名或存储过程名或自定义函数名;  </p>
 <hr>
 <p><a name="count"></a></p>
-<h2 id="COUNT-查询优化"><a href="#COUNT-查询优化" class="headerlink" title="COUNT(*)查询优化"></a>COUNT(*)查询优化</h2><p>若必须对某张表多次使用count(<em>)操作时，在该表中的一个数据类型所占字节最少的列上建立索引，可以提升count(</em>)的查询性能  </p>
+<h2 id="COUNT-查询优化"><a href="#COUNT-查询优化" class="headerlink" title="COUNT(*)查询优化"></a>COUNT(*)查询优化</h2><p>若必须对某张表多次使用count(*)操作时，在该表中的一个数据类型所占字节最少的列上建立索引，可以提升count(*)的查询性能  </p>
 <hr>
 <p><a name="operators"></a></p>
 <h2 id="比较操作符"><a href="#比较操作符" class="headerlink" title="比较操作符"></a>比较操作符</h2><p>&gt;、&lt;、=、&lt;=、&gt;=、!=(推荐&lt;&gt;)、!&lt;、!&gt;  </p>

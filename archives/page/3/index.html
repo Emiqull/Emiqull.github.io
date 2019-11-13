@@ -110,50 +110,44 @@
     </div>
 </header>
         <main class="main">
-            <article class="post">
+            
+<section class="posts">
     
-    
-    <h4 class="post-cat">
-        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
-            Microsoft SQL Server Key Words
-        </a>
-    </h4>
-    
-    
-    <h2 class="post-title">
-        VALUES
-    </h2>
-    <ul class="post-date">
-        <li>
-            2019-11-11
-        </li>
-        <li>
-            Emiqull
-        </li>
-    </ul>
-    <div class="post-content">
-        <p><a name="top"></a></p>
-<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#multiple">插入多条记录</a><br><a href="#result">表示结果集</a>  </p>
-<hr>
-<p><a name="multiple"></a></p>
-<h2 id="插入多条记录"><a href="#插入多条记录" class="headerlink" title="插入多条记录"></a>插入多条记录</h2><p><strong>单个INSERT语句插入多条记录</strong>  </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSERT INTO Demo_Values </span><br><span class="line">(DName,DCode,DDate) </span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">(<span class="string">'DemoA'</span>,<span class="string">'AAA'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoB'</span>,<span class="string">'BBB'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoC'</span>,<span class="string">'CCC'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoD'</span>,<span class="string">'DDD'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoE'</span>,<span class="string">'EEE'</span>,<span class="keyword">GETDATE</span>());</span><br></pre></td></tr></table></figure>
+        <article class="post">
+            
+                <h4 class="post-cat">
+                    <a href="/categories/HexoBlog/">
+                        HexoBlog
+                    </a>
+                </h4>
+                
+                    <h1 class="post-title">
+                        <a href="/2019/10/28/hexo-markdown/">
+                            Markdown语法规则
+                        </a>
+                    </h1>
 
-<hr>
-<p><a name="result"></a></p>
-<h2 id="表示结果集"><a href="#表示结果集" class="headerlink" title="表示结果集"></a>表示结果集</h2><p><strong>不使用永久表或临时表而表示一个结果集</strong>  </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DName,DCode,DDate </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">(<span class="keyword">VALUES</span> </span><br><span class="line">(<span class="string">'A'</span>,<span class="string">'AAA'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'B'</span>,<span class="string">'BBB'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'C'</span>,<span class="string">'CCC'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'D'</span>,<span class="string">'DDD'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'E'</span>,<span class="string">'EEE'</span>,<span class="keyword">GETDATE</span>())</span><br><span class="line">)</span><br><span class="line">Demo_Values (DName,DCode,DDate);</span><br></pre></td></tr></table></figure>
-<p><img src="/images/c_16.png" alt=""></p>
-<p><strong>注意：</strong></p>
-<ul>
-<li>Demo_Values表名定义了结果集显示的列个数、列名称  </li>
-<li>FROM()中的定义了要显示结果集源纪录，其中VALUES()值的列类型、列个数要与Demo_Values表定义的一致或相适应  </li>
-</ul>
-<hr>
-<p><a href="#top">返回顶部</a></p>
+                    <ul class="post-date">
+                        <li>
+                            October 28, 2019
+                        </li>
+                        <li>
+                            Emiqull
+                        </li>
+                    </ul>
+                    
+                        <div class="post-cover">
+                            <img src="/images/dva.jpg">
+                        </div>
+                    
+                    <div class="post-content ">
+                        
+                            <a href="/2019/10/28/hexo-markdown/" class="more-link">Continue reading</a>
+                    </div>
+        </article>
+        
+</section>
 
-    </div>
-</article>
         </main>
         <aside class="aside">
             <div class="close"></div>

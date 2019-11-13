@@ -121,11 +121,11 @@
     
     
     <h2 class="post-title">
-        VALUES
+        OFFSET FETCH
     </h2>
     <ul class="post-date">
         <li>
-            2019-11-11
+            2019-11-14
         </li>
         <li>
             Emiqull
@@ -133,22 +133,49 @@
     </ul>
     <div class="post-content">
         <p><a name="top"></a></p>
-<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#multiple">插入多条记录</a><br><a href="#result">表示结果集</a>  </p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#overview">语法概念</a><br><a href="#format">语法格式</a><br><a href="#parameter">语法参数</a><br><a href="#limitation">语法限制</a><br><a href="#examples">语法示例</a>  </p>
 <hr>
-<p><a name="multiple"></a></p>
-<h2 id="插入多条记录"><a href="#插入多条记录" class="headerlink" title="插入多条记录"></a>插入多条记录</h2><p><strong>单个INSERT语句插入多条记录</strong>  </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NSERT INTO Demo_Values </span><br><span class="line">(DName,DCode,DDate) </span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">(<span class="string">'DemoA'</span>,<span class="string">'AAA'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoB'</span>,<span class="string">'BBB'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoC'</span>,<span class="string">'CCC'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoD'</span>,<span class="string">'DDD'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'DemoE'</span>,<span class="string">'EEE'</span>,<span class="keyword">GETDATE</span>());</span><br></pre></td></tr></table></figure>
+<p><a name="overview"></a></p>
+<h2 id="语法概念"><a href="#语法概念" class="headerlink" title="语法概念"></a>语法概念</h2><ul>
+<li>通过OFFSET FETCH子句，可以从结果集中仅提取某个时间范围或某一页的结果记录  </li>
+<li>OFFSET FETCH子句只能与ORDER BY 子句一起使用  </li>
+</ul>
+<hr>
+<p><a name="format"></a></p>
+<h2 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ORDER BY &#123; order_by_expression [ ASC | DESC ] &#125; [ ,...n][&lt;offset_fetch&gt;] ]</span><br><span class="line">&lt;offset_fetch&gt; ::= &#123;OFFSET &#123; integer_constant | offset_row_count_expression &#125; &#123; ROW | ROWS &#125;</span><br><span class="line">[FETCH &#123; FIRST | NEXT &#125; &#123;integer_constant | fetch_row_count_expression &#125; &#123; ROW | ROWS &#125; ONLY]&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<p><a name="result"></a></p>
-<h2 id="表示结果集"><a href="#表示结果集" class="headerlink" title="表示结果集"></a>表示结果集</h2><p><strong>不使用永久表或临时表而表示一个结果集</strong>  </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DName,DCode,DDate </span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">(<span class="keyword">VALUES</span> </span><br><span class="line">(<span class="string">'A'</span>,<span class="string">'AAA'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'B'</span>,<span class="string">'BBB'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'C'</span>,<span class="string">'CCC'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'D'</span>,<span class="string">'DDD'</span>,<span class="keyword">GETDATE</span>()), </span><br><span class="line">(<span class="string">'E'</span>,<span class="string">'EEE'</span>,<span class="keyword">GETDATE</span>())</span><br><span class="line">)</span><br><span class="line">Demo_Values (DName,DCode,DDate);</span><br></pre></td></tr></table></figure>
-<p><img src="/images/c_16.png" alt=""></p>
-<p><strong>注意：</strong></p>
+<p><a name="parameter"></a></p>
+<h2 id="语法参数"><a href="#语法参数" class="headerlink" title="语法参数"></a>语法参数</h2><p><strong>OFFSET { integer_constant | offset_row_count_expression } { ROW | ROWS }</strong>  </p>
 <ul>
-<li>Demo_Values表名定义了结果集显示的列个数、列名称  </li>
-<li>FROM()中的定义了要显示结果集源纪录，其中VALUES()值的列类型、列个数要与Demo_Values表定义的一致或相适应  </li>
+<li>指定在查询表达式开始返回结果记录之前，将要跳过的行数  </li>
+<li>OFFSET子句的参数可以是大于或等于零的整数或表达式  </li>
+<li>ROW和ROWS可以互换使用  </li>
 </ul>
+<p><strong>FETCH { FIRST|NEXT } &lt;行计数表达式&gt; { ROW|ROWS } ONLY</strong>  </p>
+<ul>
+<li>指定在经过OFFSET子句处理后，将要返回的结果记录数  </li>
+<li>FETCH子句的参数可以是大于或等于1的整数或表达式  </li>
+<li>ROW和ROWS可以互换使用  </li>
+<li>FIRST和NEXT可以互换使用  </li>
+</ul>
+<hr>
+<p><a name="limitation"></a></p>
+<h2 id="语法限制"><a href="#语法限制" class="headerlink" title="语法限制"></a>语法限制</h2><ul>
+<li>OFFSET FETCH子句必须与ORDER BY 子句一起使用  </li>
+<li>FETCH关键字必须与OFFSET子句一起使用  </li>
+<li>TOP关键字不能在同一个查询表达式中与OFFSET FETCH子句一起使用  </li>
+<li>OFFSET 和 FETCH的行计数表达式可以是会返回整数值的任何算术、常量或表达式，但不支持标量子查询  </li>
+</ul>
+<p><strong>注：</strong> 标量子查询就是在SELECT语句中出现的子查询  </p>
+<hr>
+<p><a name="examples"></a></p>
+<h2 id="语法示例"><a href="#语法示例" class="headerlink" title="语法示例"></a>语法示例</h2><p><strong>从排序结果集中跳过前10行，返回剩余行记录</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> FirstName+ <span class="string">' '</span> +LastName <span class="keyword">FROM</span> Employess <span class="keyword">ORDER</span> <span class="keyword">BY</span> FirstName <span class="keyword">OFFSET</span> <span class="number">10</span> <span class="keyword">ROWS</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>从排序的结果集中跳过前10行，返回接下来的5行记录</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> FirstName+<span class="string">' '</span>+LastName <span class="keyword">FROM</span> Employees <span class="keyword">ORDER</span> <span class="keyword">BY</span> FirstName <span class="keyword">OFFSET</span> <span class="number">10</span> <span class="keyword">ROWS</span> <span class="keyword">FETCH</span> <span class="keyword">NEXT</span> <span class="number">5</span> <span class="keyword">ROWS</span> <span class="keyword">ONLY</span>;</span><br></pre></td></tr></table></figure>
+
 <hr>
 <p><a href="#top">返回顶部</a></p>
 
