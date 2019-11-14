@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
+            Microsoft SQL Server Key Words
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        FOR XML PATH
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-15
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#overview">语法简述</a><br><a href="#examples">示例解析</a><br><a href="#extra">语句延伸</a>  </p>
+<hr>
+<p><a name="overview"></a></p>
+<h2 id="语法简述"><a href="#语法简述" class="headerlink" title="语法简述"></a>语法简述</h2><p>MSSQL2005及以上版本提供了一个新查询语法FOR XML PATH(‘’)，该语法将查询结果集以XML形式展现，使用FOR XML PATH 语法可以简化需要借助函数或存储过程来完成的查询工作  </p>
+<hr>
+<p><a name="examples"></a></p>
+<h2 id="示例解析"><a href="#示例解析" class="headerlink" title="示例解析"></a>示例解析</h2><p><strong>根据初始表记录，使用FOR XML PATH的查询语法，让查询结果集显示为目标结果集记录的样式</strong><br>初始表记录，如下：<br><img src="/images/c_41.png" alt="">  </p>
+<p>目标结果集记录显示如下：<br><img src="/images/c_42.png" alt="">  </p>
+<p><strong>准备初始表及其数据</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建初始表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> xmltest(<span class="keyword">Name</span> <span class="built_in">varchar</span>(<span class="number">20</span>), Genius <span class="built_in">varchar</span>(<span class="number">20</span>));</span><br><span class="line"> </span><br><span class="line"><span class="comment">--为初始表插入数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> xmltest <span class="keyword">VALUES</span>(<span class="string">'Even'</span>,<span class="string">'game'</span>),(<span class="string">'Even'</span>,<span class="string">'swim'</span>),</span><br><span class="line"> (<span class="string">'Ciri'</span>,<span class="string">'sing'</span>),(<span class="string">'Dash'</span>,<span class="string">'run'</span>),</span><br><span class="line"> (<span class="string">'Ciri'</span>,<span class="string">'guiter'</span>),(<span class="string">'Dash'</span>,<span class="string">'drive'</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>步骤一：使用FOR XML PATH默认查询语句</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Genius <span class="keyword">FROM</span> xmltest <span class="keyword">FOR</span> <span class="keyword">XML</span> <span class="keyword">PATH</span>;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_43.png" alt="">  </p>
+<p>XML格式文件如下:<br><img src="/images/c_44.png" alt="">  </p>
+<p><strong>注意：</strong>  </p>
+<ul>
+<li>默认FOR XML PATH查询语句会以行(即row)作为父节点、列名做子节点、列值做节点文本  </li>
+<li>若想要改变查询结果xml的子节点名称，只需要在SELECT查询的列名后添加别名(即：列名 AS 新列名)就能改变子节点名称  </li>
+</ul>
+<p><strong>步骤二：使用FOR XML PATH查询语句，不显示父节点</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Genius <span class="keyword">FROM</span> xmltest <span class="keyword">FOR</span> <span class="keyword">XML</span> <span class="keyword">PATH</span>(<span class="string">''</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_45.png" alt="">  </p>
+<p>XML格式文件如下：<br><img src="/images/c_46.png" alt="">  </p>
+<p><strong>注意：</strong>把PATH关键字当做函数输入空值参数(即PATH(‘’))，让父节点为空，就不会显示父节点  </p>
+<p><strong>步骤三：使用FOR XML PATH查询语句，不显示父节点、子节点</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Genius+<span class="string">''</span><span class="keyword">FROM</span> xmltest <span class="keyword">FOR</span> <span class="keyword">XML</span> <span class="keyword">PATH</span>(<span class="string">''</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_47.png" alt="">  </p>
+<p><strong>注意：</strong>在不显示父节点的基础上，在要查询的列后拼接空值(即+’’)，让子节点页不再显示  </p>
+<p><strong>步骤四：使用FOR XML PATH查询语句，不显示父节点、子节点，并让查询的列值内容以逗号‘，’分割</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Genius+<span class="string">','</span><span class="keyword">FROM</span> xmltest <span class="keyword">FOR</span> <span class="keyword">XML</span> <span class="keyword">PATH</span>(<span class="string">''</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_48.png" alt="">  </p>
+<p><strong>注意：</strong>在不显示父节点和子节点的基础上，把要查询的列后拼接逗号‘，’字符，列值内容就会以逗号进行分割。相当于用逗号‘，’字符代替子节点  </p>
+<p><strong>步骤五：使用FOR XML PATH查询语句，以姓名分组、步骤四的内容作为子查询列</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>,(<span class="keyword">SELECT</span> Genius+<span class="string">','</span> <span class="keyword">FROM</span> xmltest <span class="keyword">as</span> innerTable <span class="keyword">WHERE</span> innerTable.name=outTable.name <span class="keyword">FOR</span> <span class="keyword">XML</span> <span class="keyword">PATH</span>(<span class="string">''</span>)) <span class="keyword">AS</span> newGenius</span><br><span class="line"><span class="keyword">FROM</span> xmltest <span class="keyword">AS</span> outTable <span class="keyword">GROUP</span> <span class="keyword">BY</span> outTable.name;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_49.png" alt="">  </p>
+<p><strong>注意：</strong>查询时嵌套初始表的FOR XML PATH语法查询语句，再按照初始表分组的姓名作为子查询的过滤条件  </p>
+<p><strong>步骤六：使用FOR XML PATH查询语句，完成目的</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> viewTable.name, <span class="keyword">LEFT</span>(viewTable.innerData,<span class="keyword">LEN</span>(viewTable.innerData)<span class="number">-1</span>) <span class="keyword">AS</span> outerGenius <span class="keyword">FROM</span></span><br><span class="line">(<span class="keyword">SELECT</span> <span class="keyword">name</span>,</span><br><span class="line">(<span class="keyword">SELECT</span> Genius+<span class="string">','</span> <span class="keyword">FROM</span> xmltest <span class="keyword">as</span> innerTable <span class="keyword">WHERE</span> innerTable.name=outTable.name <span class="keyword">FOR</span> <span class="keyword">XML</span> <span class="keyword">PATH</span>(<span class="string">''</span>)</span><br><span class="line">) <span class="keyword">AS</span> innerData <span class="keyword">FROM</span> xmltest <span class="keyword">AS</span> outTable <span class="keyword">group</span> <span class="keyword">by</span> outTable.name</span><br><span class="line">)<span class="keyword">AS</span> viewTable;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_50.png" alt="">  </p>
+<p><strong>注意：</strong>从步骤五完成步骤六，仅需要把Genius列值最后的逗号‘，’去掉即可，这里使用了LEFT函数，当然其他函数也可以实现  </p>
+<hr>
+<p><a name="extra"></a></p>
+<h2 id="语句延伸"><a href="#语句延伸" class="headerlink" title="语句延伸"></a>语句延伸</h2><p>使用FOR XML PATH语法查询语句，还可以通过指定字符或字符串的拼接，让查询结果集以想要的文本格式显示。仍以xmlTest表为例，查询结果集的JOSN格式，T-SQL如下：  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">'&#123;'</span>+viewTable.name+<span class="string">':"'</span>+ <span class="keyword">LEFT</span>(viewTable.innerData,<span class="keyword">LEN</span>(viewTable.innerData)<span class="number">-1</span>)+<span class="string">'"&#125;'</span> <span class="keyword">AS</span> josnStyle <span class="keyword">FROM</span></span><br><span class="line">(<span class="keyword">SELECT</span> <span class="keyword">name</span>,</span><br><span class="line">(<span class="keyword">SELECT</span> Genius+<span class="string">','</span> <span class="keyword">FROM</span> xmltest <span class="keyword">as</span> innerTable <span class="keyword">WHERE</span> innerTable.name=outTable.name <span class="keyword">FOR</span> <span class="keyword">XML</span> <span class="keyword">PATH</span>(<span class="string">''</span>)</span><br><span class="line">) <span class="keyword">AS</span> innerData <span class="keyword">FROM</span> xmltest <span class="keyword">AS</span> outTable <span class="keyword">group</span> <span class="keyword">by</span> outTable.name</span><br><span class="line">)<span class="keyword">AS</span> viewTable;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_51.png" alt="">  </p>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server/">Microsoft SQL Server</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Key-Words/">Microsoft SQL Server Key Words</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
