@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Key-Words/">
+            Microsoft SQL Server Key Words
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        MERGE
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-18
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#overview">MERGE简述</a><br><a href="#sample">示例解析</a><br><a href="#output">MERGE语句的OUTPUT子句</a><br><a href="#whenthen">MERGE语句的WHEN…THEN</a><br><a href="#topword">MERGE语句中使用TOP关键字</a><br><a href="#and">附加限制条件AND</a><br><a href="#tips">MERGE语句Tips</a>  </p>
+<hr>
+<p><a name="overview"></a></p>
+<h2 id="MERGE简述"><a href="#MERGE简述" class="headerlink" title="MERGE简述"></a>MERGE简述</h2><ul>
+<li>MERGE一个DML关键字,它在SQL Server 2008被引入，它能将Insert,Update,Delete的功能合并为一句  </li>
+<li>MSDN对于Merge的解释:”根据与源表联接的结果，对目标表执行插入、更新或删除操作。”  </li>
+</ul>
+<p><strong>例如</strong>  </p>
+<ul>
+<li>根据源表在目标表中找到存在差异的记录，在目标表中插入、更新或删除行，并可选择的对源表操作(即可以对两个表进行同步)    </li>
+<li>需要使用Merge的场景比如:数据同步、数据转换和基于源表对目标表做Insert,Update,Delete操作  </li>
+</ul>
+<hr>
+<p><a name="sample"></a></p>
+<h2 id="示例解析"><a href="#示例解析" class="headerlink" title="示例解析"></a>示例解析</h2><p><strong>目的:</strong>创建一个源表和目标表，根据源表的记录对目标表的记录进行操作  </p>
+<ul>
+<li>若源表与目标表的id相同，则更新目标表的记录为源表的记录  </li>
+<li>若目标表不存在源表的记录，则向目标表中插入源表的记录  </li>
+<li>若目标表中存在源表中没有的记录，则删除该仅在目标表中存在的记录  </li>
+</ul>
+<p><strong>准备源表与目标表及其数据</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建源表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> SourceTable(<span class="keyword">id</span> <span class="built_in">INT</span>, nowText <span class="built_in">varchar</span>(<span class="number">40</span>))</span><br><span class="line"> </span><br><span class="line"><span class="comment">--创建目标表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> TargetTable(<span class="keyword">id</span> <span class="built_in">INT</span>, nowTime <span class="built_in">varchar</span>(<span class="number">40</span>))</span><br><span class="line"> </span><br><span class="line"><span class="comment">--为源表插入数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> SourceTable</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="number">1</span>, <span class="string">'源表的文本一'</span>),(<span class="number">2</span>, <span class="string">'源表的文本二'</span>),(<span class="number">3</span>, <span class="string">'目标表不存在，将要插入的文本一'</span>), (<span class="number">4</span>, <span class="string">'目标表不存在，将要插入的文本二'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">--为目标表插入数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> TargetTable <span class="keyword">VALUES</span>(<span class="number">1</span>, <span class="string">'源表中存在，将会更新的文本一'</span>),(<span class="number">2</span>, <span class="string">'源表中存在，将要更新的文本二'</span>),(<span class="number">5</span>, <span class="string">'源表不存在，将要删除的文本一'</span>),</span><br><span class="line">          (<span class="number">6</span>, <span class="string">'源表不存在，将要删除的文本二'</span>)</span><br></pre></td></tr></table></figure>
+<p>SourceTable表与TargetTable表初始记录，如下：<br><img src="/images/c_52.png" alt="">  </p>
+<p><strong>使用MERGE关键字完成目的</strong>  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--MERGE关键字语句</span></span><br><span class="line"><span class="keyword">MERGE</span> <span class="keyword">INTO</span> TargetTable <span class="keyword">AS</span> T    <span class="comment">--MERGE关键字指向的操作目标表</span></span><br><span class="line"><span class="keyword">USING</span> SourceTable <span class="keyword">AS</span> S    <span class="comment">--MERGE关键字目标表要对比的源表</span></span><br><span class="line"><span class="keyword">ON</span> T.id = S.id    <span class="comment">--目标表与源表的比对条件</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">MATCHED</span>    <span class="comment">--若目标表满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">UPDATE</span> <span class="keyword">SET</span> T.nowText = S.nowText    <span class="comment">--更新目标表T表的nowText列值为源表S表的nowText列值</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span>    <span class="comment">--若目标表不满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">INSERT</span> <span class="keyword">VALUES</span> (S.id, S.nowText)    <span class="comment">--向目标表T表插入源表S表的记录</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span> <span class="keyword">BY</span> <span class="keyword">Source</span>    <span class="comment">--若源表不满足目标表与源表的对比条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">DELETE</span>;    <span class="comment">--删除一行记录(这里删除的就是源表中不满足对比条件的记录)</span></span><br></pre></td></tr></table></figure>
+<p>SourceTable表与TargetTable表使用MERGE语句后的记录，如下：<br><img src="/images/c_53.png" alt="">  </p>
+<hr>
+<p><a name="output"></a></p>
+<h2 id="MERGE语句的OUTPUT子句"><a href="#MERGE语句的OUTPUT子句" class="headerlink" title="MERGE语句的OUTPUT子句"></a>MERGE语句的OUTPUT子句</h2><p>Merge语句还有一个强大的功能是通过OUTPUT子句，可以将刚刚做过变动的数据进行输出。以上面的例子在MERGE语句后加上OUTPUT子句  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--MERGE关键字语句</span></span><br><span class="line"><span class="keyword">MERGE</span> <span class="keyword">INTO</span> TargetTable <span class="keyword">AS</span> T    <span class="comment">--MERGE关键字指向的操作目标表</span></span><br><span class="line"><span class="keyword">USING</span> SourceTable <span class="keyword">AS</span> S    <span class="comment">--MERGE关键字目标表要对比的源表</span></span><br><span class="line"><span class="keyword">ON</span> T.id = S.id    <span class="comment">--目标表与源表的比对条件</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">MATCHED</span>    <span class="comment">--若目标表满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">UPDATE</span> <span class="keyword">SET</span> T.nowText = S.nowText    <span class="comment">--更新目标表T表的nowText列值为源表S表的nowText列值</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span>    <span class="comment">--若目标表不满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">INSERT</span> <span class="keyword">VALUES</span> (S.id, S.nowText)    <span class="comment">--向目标表T表插入源表S表的记录</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span> <span class="keyword">BY</span> <span class="keyword">Source</span>    <span class="comment">--若源表不满足目标表与源表的对比条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">DELETE</span>    <span class="comment">--删除一行记录(这里删除的就是源表中不满足对比条件的记录)</span></span><br><span class="line"><span class="keyword">OUTPUT</span> $<span class="keyword">ACTION</span> <span class="keyword">AS</span> [<span class="keyword">ACTION</span>],</span><br><span class="line">   Inserted.id <span class="keyword">AS</span> Insertedid,</span><br><span class="line">   Inserted.nowText <span class="keyword">AS</span> InsertednowText,</span><br><span class="line">   Deleted.id <span class="keyword">AS</span> Deletedid,</span><br><span class="line">   Deleted.nowText <span class="keyword">AS</span> DeletednowText;</span><br></pre></td></tr></table></figure>
+<p>MERGE语句加上OUTPUT子句后，执行结果如下:<br><img src="/images/c_54.png" alt="">  </p>
+<hr>
+<p><a name="whenthen"></a></p>
+<h2 id="MERGE语句的WHEN…THEN"><a href="#MERGE语句的WHEN…THEN" class="headerlink" title="MERGE语句的WHEN…THEN"></a>MERGE语句的WHEN…THEN</h2><p>上面的示例中，MERGE关键字后面使用了多个WHEN…THEN语句，但<strong>MERGE关键字的WHEN…THEN语句个数是可选的</strong>, 比如仅新增或是仅删除，以下示例仅在目标表中仅新增(即插入)的MERGE语句  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--MERGE关键字语句</span></span><br><span class="line"><span class="keyword">MERGE</span> <span class="keyword">INTO</span> TargetTable <span class="keyword">AS</span> T    <span class="comment">--MERGE关键字指向的操作目标表</span></span><br><span class="line"><span class="keyword">USING</span> SourceTable <span class="keyword">AS</span> S    <span class="comment">--MERGE关键字目标表要对比的源表</span></span><br><span class="line"><span class="keyword">ON</span> T.id = S.id    <span class="comment">--目标表与源表的比对条件</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span>    <span class="comment">--若目标表不满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">INSERT</span> <span class="keyword">VALUES</span> (S.id, S.nowText)    <span class="comment">--向目标表T表插入源表S表的记录</span></span><br><span class="line"><span class="keyword">OUTPUT</span> $<span class="keyword">ACTION</span> <span class="keyword">AS</span> [<span class="keyword">ACTION</span>],</span><br><span class="line">   Inserted.id <span class="keyword">AS</span> Insertedid,</span><br><span class="line">   Inserted.nowText <span class="keyword">AS</span> InsertednowText,</span><br><span class="line">   Deleted.id <span class="keyword">AS</span> Deletedid,</span><br><span class="line">   Deleted.nowText <span class="keyword">AS</span> DeletednowText;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_55.png" alt="">  </p>
+<hr>
+<p><a name="topword"></a></p>
+<h2 id="MERGE语句中使用TOP关键字"><a href="#MERGE语句中使用TOP关键字" class="headerlink" title="MERGE语句中使用TOP关键字"></a>MERGE语句中使用TOP关键字</h2><p><strong>在MERGE语句中还可以使用TOP关键字来限制目标表被操作的行</strong>  </p>
+<ul>
+<li>本例中在MERGE语句的基础上加上了TOP关键字，表示只有两行记录会被更新  </li>
+<li>注意：在使用TOP关键字时，原来的INTO关键字就不能再使用了  </li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--MERGE关键字语句</span></span><br><span class="line"><span class="keyword">MERGE</span> TOP(<span class="number">2</span>) TargetTable <span class="keyword">AS</span> T    <span class="comment">--MERGE关键字指向的操作目标表的前两行记录</span></span><br><span class="line"><span class="keyword">USING</span> SourceTable <span class="keyword">AS</span> S    <span class="comment">--MERGE关键字目标表要对比的源表</span></span><br><span class="line"><span class="keyword">ON</span> T.id = S.id    <span class="comment">--目标表与源表的比对条件</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">MATCHED</span>    <span class="comment">--若目标表满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">UPDATE</span> <span class="keyword">SET</span> T.nowText = S.nowText    <span class="comment">--更新目标表T表的nowText列值为源表S表的nowText列值</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span>    <span class="comment">--若目标表不满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">INSERT</span> <span class="keyword">VALUES</span> (S.id, S.nowText)    <span class="comment">--向目标表T表插入源表S表的记录</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span> <span class="keyword">BY</span> <span class="keyword">Source</span>    <span class="comment">--若源表不满足目标表与源表的对比条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">DELETE</span>    <span class="comment">--删除一行记录(这里删除的就是源表中不满足对比条件的记录)</span></span><br><span class="line"><span class="keyword">OUTPUT</span> $<span class="keyword">ACTION</span> <span class="keyword">AS</span> [<span class="keyword">ACTION</span>],</span><br><span class="line">   Inserted.id <span class="keyword">AS</span> Insertedid,</span><br><span class="line">   Inserted.nowText <span class="keyword">AS</span> InsertednowText,</span><br><span class="line">   Deleted.id <span class="keyword">AS</span> Deletedid,</span><br><span class="line">   Deleted.nowText <span class="keyword">AS</span> DeletednowText;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_56.png" alt="">  </p>
+<hr>
+<p><a name="and"></a></p>
+<h2 id="附加限制条件AND"><a href="#附加限制条件AND" class="headerlink" title="附加限制条件AND"></a>附加限制条件AND</h2><p>在实际目标表与源表记录的对比中，通常情况下仅仅是MATCHED这种限制条件往往不能满足全部需求。<br>但<strong>可以在MERGE语句原有限制的基础上加上AND附加额外的限制条件，来细化记录对比条件</strong><br>本例中以id = 3的记录为例执行目标表仅新增的操作  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--MERGE关键字语句</span></span><br><span class="line"><span class="keyword">MERGE</span> <span class="keyword">INTO</span> TargetTable <span class="keyword">AS</span> T    <span class="comment">--MERGE关键字指向的操作目标表</span></span><br><span class="line"><span class="keyword">USING</span> SourceTable <span class="keyword">AS</span> S    <span class="comment">--MERGE关键字目标表要对比的源表</span></span><br><span class="line"><span class="keyword">ON</span> T.id = S.id    <span class="comment">--目标表与源表的比对条件</span></span><br><span class="line"><span class="keyword">WHEN</span> <span class="keyword">NOT</span> <span class="keyword">MATCHED</span> <span class="keyword">AND</span> S.id = <span class="number">3</span>    <span class="comment">--若目标表不满足目标表与源表的比对条件:T.id = S.id时，执行下一个THEN子句</span></span><br><span class="line"><span class="keyword">THEN</span> <span class="keyword">INSERT</span> <span class="keyword">VALUES</span> (S.id, S.nowText)    <span class="comment">--向目标表T表插入源表S表的记录</span></span><br><span class="line"><span class="keyword">OUTPUT</span> $<span class="keyword">ACTION</span> <span class="keyword">AS</span> [<span class="keyword">ACTION</span>],</span><br><span class="line">   Inserted.id <span class="keyword">AS</span> Insertedid,</span><br><span class="line">   Inserted.nowText <span class="keyword">AS</span> InsertednowText,</span><br><span class="line">   Deleted.id <span class="keyword">AS</span> Deletedid,</span><br><span class="line">   Deleted.nowText <span class="keyword">AS</span> DeletednowText;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/c_57.png" alt="">  </p>
+<hr>
+<p><a name="tips"></a></p>
+<h2 id="MERGE语句Tips"><a href="#MERGE语句Tips" class="headerlink" title="MERGE语句Tips"></a>MERGE语句Tips</h2><ul>
+<li>执行MERGE语句一次只能操作一个目标表  </li>
+<li>执行MERGE语句的源表中若有重复的记录，则只允许执行INSERT语句(即第四点中满足NOT MATCHED关键字，也就是不满足匹配条件)插入所有重复记录  </li>
+<li>在MERGE语句的MATCHED关键字之后，只允许执行一次UPDATE语句或一次DELETE语句  </li>
+<li>在MERGE语句的NOT MATCHED关键字之后，只允许执行INSERT语句  </li>
+<li>MERGE语句的结束必须以英文分号“;”结尾  </li>
+<li>在MERGE语句中默认关键字MATCHED关键字说明的对象是目标表，但可以在MATCHED关键字之后加上BY Target或BY Source来显式说明MATCHED的对象  </li>
+</ul>
+<hr>
+<p><a href="top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Advanced/">Microsoft SQL Server Advanced</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Basis/">Microsoft SQL Server Basis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Key-Words/">Microsoft SQL Server Key Words</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>
