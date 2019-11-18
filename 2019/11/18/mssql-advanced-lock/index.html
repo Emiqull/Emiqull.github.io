@@ -132,7 +132,82 @@
         </li>
     </ul>
     <div class="post-content">
-        
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#reference">锁的引入</a><br><a href="#kinds">锁的分类</a><br><a href="#range">锁的粒度</a><br><a href="#time">锁定时间的长短</a><br><a href="#overtime">处理超时和设置锁超时持续时间</a><br><a href="#review">查看锁的信息</a><br><a href="#avoid">避免死锁</a><br><a href="#onlock">对行、表、数据库加锁</a>  </p>
+<hr>
+<p><a name="reference"></a></p>
+<h2 id="锁的引入"><a href="#锁的引入" class="headerlink" title="锁的引入"></a>锁的引入</h2><p>当多个用户同时对数据库的进行并发操作时，会带来以下数据不一致的的问题：  </p>
+<ul>
+<li>丢失更新：两个用户读取同一数据，并进行修改，其中一个用户的修改结果覆盖了另一个用户的修改操作，如订票系统  </li>
+<li>脏读：事务中一个用户修改了数据后，另一个用户读取了该数据，但第一个用户因某些原因取消了修改，即数据rollback，数据恢复了初始值，此时第二个用户读取的数据，就与数据库中存储的真实值不值  </li>
+<li>不可重复读：在一个事务中，一个用户读取数据，而另外一个事务中修改了该数据，此时再次在第一个事务中读取数据，会发现前后两次的查询结果不一致<br>解决这些并发控制带来的问题的主要方法是封锁，锁就是在一段时间内禁止用户做某些操作以避免产生数据不一致  </li>
+</ul>
+<hr>
+<p><a name="kinds"></a></p>
+<h2 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h2><p>从数据库系统的角度来看，锁分为：<strong>独占锁(即排它锁)、共享锁和更新锁</strong>  </p>
+<ul>
+<li>共享锁：用于不更改或不更新数据的操作，即只读操作，如SELECT语句  </li>
+<li>更新锁：用于可更新的资源中。防止当多个会话在读取、锁定及随后可能进行的数据更新时发生常见形式的死锁  </li>
+<li>排它锁：用于数据修改操作，确保不会同时同一数据进行多重更新，如INSERT、UPDATE和DELETE语句  </li>
+</ul>
+<p><strong>共享锁</strong>允许并发事务读取数据。数据上存在共享锁时，任何其他事务都不能修改数据，一旦已经读取数据，便立即释放资源上的共享锁，除非将事务隔离级别设置为可重复读或更高级别，或者在事务生存周期内用锁定提示保留共享锁<br><strong>更新锁</strong>可以防止通常形式的死锁。一般更新模式由一个事务组成，此事务读取记录，获取资源页或行的共享锁，然后进行修改，此操作要求锁转换为排它锁。如果两个事务获得了资源上的共享锁，然后视图同时更新数据，则一个事务尝试将锁转换为排它锁<br>共享锁到排它锁的转换需要等待一段时间，因为一个事务的排它锁与其他事务的共享锁不兼容，发生锁等待。第二个事务视图获取排它锁进行更新，由于两个事务都需要转换为排它锁，且每个事务都等待另一个事务释放共享锁，因此发生死锁  若要避免这种潜在的死锁问题，建议使用更新锁：一次只有一个事务可以获得资源的更新锁。如果事务修改资源，则更新锁转换为排它锁，否则，锁转换为共享锁<br><strong>排它锁</strong>可以防止并发事务对资源进行访问，其他事务不能读取或修改排它锁锁定的数据  </p>
+<p>从开发者的角度看，锁分为：<strong>乐观锁或悲观锁</strong>  </p>
+<ul>
+<li>乐观锁：完全依靠数据库来管理锁的工作  </li>
+<li>悲观锁：开发者自己管理数据或对象上的锁处理  </li>
+</ul>
+<p>MSSQL使用锁在数据库中多个用户同时执行的修改实现悲观并发控制  </p>
+<hr>
+<p><a name="range"></a></p>
+<h2 id="锁的粒度"><a href="#锁的粒度" class="headerlink" title="锁的粒度"></a>锁的粒度</h2><p><strong>锁粒度是被封锁目标的大小，封锁粒度小则并发性高，但开销大；封锁粒度则并发性低，但开销小</strong>  </p>
+<p>MSSQL支持的锁粒度分为行、页、键、键范围、索引、表或数据库获取锁  </p>
+<ul>
+<li>RID行标识符。用于单独锁定表中的一行  </li>
+<li>页 8千字节(kb)的数据页或索引页  </li>
+<li>键 索引中的行锁。用于保护序列化事务中的键范围  </li>
+<li>扩展盘区 相邻的八个数据页或索引页构成的一组  </li>
+<li>表 包括所有数据和索引在内的整个表  </li>
+<li>DB 数据库  </li>
+</ul>
+<hr>
+<p><a name="time"></a></p>
+<h2 id="锁定时间的长短"><a href="#锁定时间的长短" class="headerlink" title="锁定时间的长短"></a>锁定时间的长短</h2><p><strong>锁保持的时间长度为保护所请求级别上的资源所需的时间长度</strong>  </p>
+<p>用于保护读取操作的共享锁的保持时间取决于事务隔离级别。采用READ COMMITTED的默认事务隔离级别时，只在读取页的期间内控制共享锁  在扫描中，直到在扫描内的下一页上获取锁时才释放锁。如果指定holdlock提示或将事务隔离级别设置为REPEATABLE READ或SERIALIZABLE，则直到事务结束才释放锁<br>用于保护更新的排它锁将直到事务结束才释放。如果一个连接视图获取一个锁，而该锁与另一个连接所控制的锁冲突，则试图获取锁的连接将一直阻塞  </p>
+<hr>
+<p><a name="overtime"></a></p>
+<h2 id="处理超时和设置锁超时持续时间"><a href="#处理超时和设置锁超时持续时间" class="headerlink" title="处理超时和设置锁超时持续时间"></a>处理超时和设置锁超时持续时间</h2><p>@@LOCK_TIMEOUT 返回当前会话锁超时设置，单位为毫秒<br>SET LOCK_TIMEOUT 设置允许应用程序设置语句等待阻塞资源的最长时间</p>
+<ul>
+<li>当语句等待的时间大于LOCK_TIMEOUT设置时，系统将自动取消阻塞的语句，并给应用程序返回”已超过了锁请求超时时段”的1222号错误信息。如设置锁超时时限为1800毫秒：SET LOCK_TIMEOUT 1800  </li>
+</ul>
+<hr>
+<p><a name="review"></a></p>
+<h2 id="查看锁的信息"><a href="#查看锁的信息" class="headerlink" title="查看锁的信息"></a>查看锁的信息</h2><ul>
+<li>执行EXEC SP_LOCK报告有关锁的信息  </li>
+<li>查询分析器中按Ctrl+2可以看到锁的信息  </li>
+</ul>
+<hr>
+<p><a name="avoid"></a></p>
+<h2 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h2><ul>
+<li>使用事务时，尽量缩短事务的逻辑处理过程，及早提交或回滚事务  </li>
+<li>设置死锁超时参数为合理范围，如3分钟-10分钟；超过时间，自动放弃本次操作，避免进程悬挂  </li>
+<li>优化程序，检查并避免死锁现象出现  </li>
+<li>在正式版本之前，对所有的脚本和SP都要仔细测试  </li>
+<li>所有的SP都要有错误处理，通过@ERROR  </li>
+<li>一般不要修改SQL Server事务的默认级别，不推荐强行加锁  </li>
+</ul>
+<hr>
+<p><a name="onlock"></a></p>
+<h2 id="对行、表、数据库加锁"><a href="#对行、表、数据库加锁" class="headerlink" title="对行、表、数据库加锁"></a>对行、表、数据库加锁</h2><p>锁定表的某一行  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">TRANSACTION</span> <span class="keyword">ISOLATION</span> <span class="keyword">LEVEL</span> <span class="keyword">READ</span> UNCOMMITTED</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">table</span> ROWLOCK <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>锁定数据库的一个表  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">table</span> <span class="keyword">WITH</span>(HOLDLOCK)</span><br></pre></td></tr></table></figure>
+<p>加锁语句  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col1 <span class="keyword">from</span> 表(tablockx) <span class="keyword">where</span> <span class="number">1</span>=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>加锁后其他人不可操作，直到加锁用户解锁，用commit或rollback解锁  </p>
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
     </div>
 </article>
         </main>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta name="keywords" content="hexo, autumn" />
+    <title>
+        Emiqll
+    </title>
+    <!-- favicon -->
+    
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
+     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- highlight -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad()
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
+
+    <script>
+        infiniteScroll()
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const [
+                mainTitle,
+                mobileMenu,
+                mobileMainTitle,
+                mobileMenuBtn,
+                ipadMenuBtn,
+                aside,
+                closeBtn,
+            ] = getEle(
+                '#main-title',
+                '.mobile-menu',
+                '.mobile-menu h3',
+                '.mobile-menu button',
+                '.ipad-menu',
+                'aside',
+                'aside .close',
+            )
+            const io = new IntersectionObserver(entries => {
+                if (entries[0].intersectionRatio <= 0) {
+                    mobileMainTitle.classList.remove('invisibile')
+                } else {
+                    mobileMainTitle.classList.add('invisibile')
+                }
+            })
+            io.observe(mainTitle)
+
+            clickToggleAside(mobileMenuBtn)
+            clickToggleAside(ipadMenuBtn)
+            clickToggleAside(closeBtn, false)
+
+            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
+            if (isMenuVisible) document.body.style.background = 'none'
+
+            function getEle(...args) {
+                return args.map(arg => document.querySelector(arg))
+            }
+
+            function clickToggleAside(btn, show = true) {
+                btn.addEventListener('click', function () {
+                    if (show) {
+                        aside.style.display = 'block'
+                    } else {
+                        aside.style.display = 'none'
+                    }
+                })
+            }
+        })
+    </script>
+</head>
+
+<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+    <div class="container">
+        <header class="header">
+    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
+        <h3 class="invisibile">
+            <a href="/" class="logo">
+                Emiqll
+            </a>
+        </h3>
+        <button class="menu">menu</button>
+    </nav>
+
+    <button class="ipad-menu menu">menu</button>
+
+    <h1 class="title" id="main-title">
+        <a href="/" class="logo">
+            Emiqll
+        </a>
+    </h1>
+    <h2 class="desc">
+        认清生活的本质后，依然热爱生活
+    </h2>
+
+    <div class="links">
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
+                    Github
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</header>
+        <main class="main">
+            <article class="post">
+    
+    
+    <h4 class="post-cat">
+        <a href="/categories/Microsoft-SQL-Server-Advanced/">
+            Microsoft SQL Server Advanced
+        </a>
+    </h4>
+    
+    
+    <h2 class="post-title">
+        (事务隔离级别)DBCC
+    </h2>
+    <ul class="post-date">
+        <li>
+            2019-11-19
+        </li>
+        <li>
+            Emiqull
+        </li>
+    </ul>
+    <div class="post-content">
+        <p><a name="top"></a></p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#setting">管理事务级别</a><br><a href="#details">事务级别详解</a>  </p>
+<hr>
+<p><a name="setting"></a></p>
+<h2 id="管理事务级别"><a href="#管理事务级别" class="headerlink" title="管理事务级别"></a>管理事务级别</h2><ul>
+<li>MSSQL获取数据库当前事务隔离级别：  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DBCC USEROPTIONS</span><br></pre></td></tr></table></figure></li>
+<li>MSSQL事务隔离级别：  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE | [SNAPSHOT] | [READ COMMITTED SNAPSHOT]</span><br></pre></td></tr></table></figure></li>
+<li>MSSQL设置事务隔离级别：  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">TRANSACTION</span> <span class="keyword">ISOLATION</span> <span class="keyword">LEVEL</span> 隔离级别名称</span><br></pre></td></tr></table></figure></li>
+<li>MSSQL设置查询表隔离级别：  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ... <span class="keyword">FROM</span> &lt;<span class="keyword">table</span>&gt; <span class="keyword">with</span> (隔离级别名称)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>备注：读操作会申请共享锁，写操作会申请排它锁</strong></p>
+<hr>
+<p><a name="details"></a></p>
+<h2 id="事务级别详解"><a href="#事务级别详解" class="headerlink" title="事务级别详解"></a>事务级别详解</h2><p><strong>READ UNCOMMITTED</strong>  </p>
+<ul>
+<li>未提交读，读脏数据。相当于nolock  </li>
+<li>读操作之前不请求共享锁，允许读取未提交的修改，也就是允许读脏数据，读操作不会影响写操作请求排它锁<br>【A用户修改了数据,随后B用户又读出该数据,但A用户因为某些原因取消了对数据的修改,数据恢复原值，即rollback，此时B得到的数据就与数据库内的数据产生了不一致，这种现象称之为脏读 】  </li>
+</ul>
+<p><strong>READ COMMITTED</strong>  </p>
+<ul>
+<li>已提交读，默认级别  </li>
+<li>读操作之前首先申请获得共享锁，允许其他读操作读取锁定的数据，但写操作必须等待锁释放，一般读操作读取完就会立刻释放共享锁  </li>
+<li>由于READ COMMITTED读操作一完成就立即释放共享锁，读操作不会在一个事务过程中保持共享锁<br>【也就是说在一个事务的两个查询过程之间有另一个会话对数据进行了修改，会导致一个事务的两次查询得到的结果不一致，这种现象称之为不可重复读】  </li>
+</ul>
+<p><strong>REPEATABLE READ</strong>  </p>
+<ul>
+<li>可以重复读，相当于holdlock  </li>
+<li>保证在一个事务中的两个读操作之间，其他的事物不能修改当前事务读取的数据，该级别事务获取数据前必须先获得共享锁，同时获得的共享锁不立即释放，会一直保持共享锁至事务完成，所以此隔离级别查询完并提交事务很重要  </li>
+<li>REPEATABLE READ隔离级别保证一个事务中的两次查询得到的结果一致，同时保证了丢失更新<br>【丢失更新：两个事务同时读取了同一个值，然后基于最初的值进行计算，接着再更新，就会导致两个事务的更新相互覆盖<br>例如酒店订房例子，两个人同时预定同一酒店的房间，首先两个人同时查询到还有一间房间可以预定，然后两个人同时提交预定操作，事务1执行number=1-0，同时事务2也执行number=1-0  最后修改number=0,这就导致两个人其中一个人的操作被另一个人所覆盖，REPEATABLE READ隔离级别就能避免这种丢失更新的现象  当事务1查询房间时事务就一直保持共享锁直到事务提交，而不是像前面的几个隔离级别查询完就释放共享锁，就能避免其他事务获取排他锁】  </li>
+</ul>
+<p><strong>SERIALIZABLE</strong>  </p>
+<ul>
+<li>序列化，提供严格的事务隔离。它要求事务序列化执行，事务只能一个接着一个执行，但不能并发执行  </li>
+<li>对于REPEATABLE READ能保证事务可重复读，但是事务只能锁定查询第一次运行时获取的数据行，而不能锁定查询结果之外的行。因此【在一个事务中当第一个查询和第二个查询过程之间，有其他事务执行插入操作且插入数据满足第一次查询读取过滤的条件时，那么在第二次查询的结果中就会存在这些新插入的数据，使两次查询结果不一致，这种读操作称之为幻读】为了避免幻读需要将隔离级别设置为SERIALIZABLE  </li>
+</ul>
+<p><strong>SNAPSHOT与READ COMMITTED SNAPSHOT(MSSQL特有):</strong>  </p>
+<ul>
+<li>SNAPSHOT快照：SNAPSHOT和READ COMMITTED SNAPSHOT已提交读隔离两种隔离(可以把事务已经提交的行的上一版本保存在TEMPDB数据库中)  </li>
+<li>SNAPSHOT隔离级别在逻辑上与SERIALIZABLE类似，READ COMMITTED SNAPSHOT隔离级别在逻辑上与READ COMMITTED类似  </li>
+<li>在快照隔离级别读操作不需要申请获得共享锁，所以即便是数据已存在排它锁也不影响读操作。而且仍然可以得到和SERIALIZABLE与READ COMMITTED隔离级别类似的一致性；如果目前版本与预期的版本不一致，读操作可以从TEMPDB中获取预期的版本  </li>
+<li>如果启用任何一种基于快照的隔离级别，DELETE和UPDATE语句在作出修改前都会把行的当前版本复制到TEMPDB中，而INSERT语句不需要在TEMPDB中进行版本控制，因为此时还没有行的就数据  </li>
+<li>无论启用哪种基于快照的隔离级别，都会对更新和删除操作产生性能的负面影响，但是有利于提高读操作的性能，因为读操作不需要获取共享锁  </li>
+</ul>
+<p><strong>SNAPSHOT</strong><br>SNAPSHOT隔离级别下，当读取数据时，可以保证操作读取的行是事务开始时可用的最后提交版本。同时SNAPSHOT隔离级别也满足前面的已提交读、可重复读、不幻读，该隔离级别使用的不是共享锁，而是行版本控制<br>使用SNAPSHOT隔离级别首先需要在数据库级别上设置相关选项，在打开的所有查询窗口中执行：  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> <span class="keyword">TEST</span> <span class="keyword">SET</span> ALLOW_SNAPSHOT_ISOLATION <span class="keyword">ON</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在回话1中打开事务,将订单10的价格加1,并查询跟新后的价格  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="keyword">UPDATE</span> Orders</span><br><span class="line"><span class="keyword">SET</span> Price=Price+<span class="number">1</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ID</span>,Price,<span class="keyword">type</span> <span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span></span><br><span class="line"><span class="comment">---查询到更新后的价格为11</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---在回话2中将隔离级别设置为SNAPSHOT,并打开事务(此时查询也不会因为回话1的排他锁而等待,依然可以查询到数据)</span></span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">TRANSACTION</span> <span class="keyword">ISOLATION</span> <span class="keyword">LEVEL</span> <span class="keyword">SNAPSHOT</span></span><br><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ID</span>,Price,<span class="keyword">type</span> <span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---查询到的结果还是回话1修改前的价格,由于回话1在默认的READ COMMITTED隔离级别下运行,SQL SERVER必须在更新前把行的一个副本复制到TEMPDB数据库中</span></span><br><span class="line"><span class="comment">--在SNAPSHOT级别启动事务会请求行版本</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---现在在回话1中执行提交事务,此时订单10的价格为11</span></span><br><span class="line"><span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---再次在回话二中查询订单10的价格并提交事务,结果还是10,因为事务要保证两次查询的结果相同</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ID</span>,Price,<span class="keyword">type</span> <span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---此时如果在回话2中重新打开一个事务,查询到的订单10的价格则是11</span></span><br><span class="line"><span class="keyword">BEGIN</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ID</span>,Price,<span class="keyword">type</span> <span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*SNAPSHOT隔离级别保证操作读取的行是事务开始时可用的最后已提交版本,由于回话1的事务未提交,所以订单10的最后提交版本还是修改前的价格10,所以回话2读取到的价格是回话2事务开始前的已提交版本价格10,当回话1提交事务后,回话2重新新建一个事务此时事务开启前的价格已经是11了，所以查询到的价格是11，同时SNAPSHOT隔离级别还能保证SERIALIZABLE的隔离级别*/</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>READ COMMITTED SNAPSHOT</strong><br>READ COMMITTED SNAPSHOT也是基于行版本控制，但是READ COMMITTED SNAPSHOT的隔离级别是读操作之前的最后已提交版本，而不是事务前的已提交版本<br>有点类似READ COMMITTED能保证已提交读，但是不能保证可重复读，不能避免幻读，但是又比READ COMMITTED隔离级别多出了不需要获取共享锁就可以读取数据<br>要启用READ COMMITTED SNAPSHOT隔离级别需要修改数据库选项:<br>【ALTER DATABASE TEST SET READ_COMMITTED_SNAPSHOT ON;，执行操作的当前连接必须是数据库的唯一连接，可以通过查询当前你数据库的进程，然后KILL其他进程，再执行该操作，否则可能无法执行成功】  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-----在回话1中打开事务,将订单10的价格加1,并查询跟新后的价格,并保持事务一直处于打开状态BEGIN TRANSACTIONUPDATE Orders</span></span><br><span class="line"><span class="keyword">SET</span> Price=Price+<span class="number">1</span><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--查询到的价格是11SELECT ID,Price,type FROM Orders</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---在回话2中打开事务查询订单10并一直保持事务处于打开状态(此时由于回话1还未提交事务,所以回话2中查询到的还是回话1执行事务之前保存的行版本)BEGIN TRANSACTIONSELECT ID,Price,type FROM Orders</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span><span class="comment">--查询到的价格还是10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---在回话1中提交事务COMMIT TRANSACTION</span></span><br><span class="line"></span><br><span class="line"><span class="comment">---在回话2中再次执行查询订单10的价格,并提交事务SELECT ID,Price,type FROM Orders</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ID</span>=<span class="number">10</span><span class="keyword">COMMIT</span> <span class="keyword">TRANSACTION</span></span><br><span class="line"><span class="comment">--此时的价格为回话1修改后的价格11,而不是事务之前已提交版本的价格,也就是READ COMMITTED SNAPSHOT隔离级别在同一事务中两次查询的结果不一致.</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><a href="#top">返回顶部</a></p>
+
+    </div>
+</article>
+        </main>
+        <aside class="aside">
+            <div class="close"></div>
+            <section class="aside-section">
+                
+    <h1>Categories</h1>
+
+    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Advanced/">Microsoft SQL Server Advanced</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Basis/">Microsoft SQL Server Basis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Key-Words/">Microsoft SQL Server Key Words</a></li></ul>
+
+            </section>
+            <section class="aside-section">
+                
+    <h1>Archives</h1>
+
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
+
+
+            </section>
+            <section class="aside-section tag">
+                
+            </section>
+        </aside>
+    </div>
+</body>
+
+</html>

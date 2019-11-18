@@ -133,7 +133,7 @@
     </ul>
     <div class="post-content">
         <p><a name="top"></a></p>
-<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#overview">表概念</a><br><a href="#paradigm">范式</a><br><a href="#ermap">E-R图</a><br><a href="#version">查询数据库版本</a><br><a href="#commented">注释</a><br><a href="#values">变量赋值</a><br><a href="#time">T-SQL执行时间</a><br><a href="#content">查询包含执行文本的存储过程</a><br><a href="#triggers">查询当前数据库的所有触发器</a><br><a href="#specified">查看指定触发器或存储过程的内容或自定义函数</a><br><a href="#count">COUNT(*)查询优化</a><br><a href="#operators">比较操作符</a><br><a href="#unions">多表连接优化</a><br><a href="#wildcard">通配符</a><br><a href="#between">BETWEEN…AND</a><br><a href="#tips">编写T-SQL的小技巧</a><br><a href="#folwcontrol">流程控制语句</a><br><a href="#server">链接服务器</a>  </p>
+<h1 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h1><p><a href="#overview">表概念</a><br><a href="#paradigm">范式</a><br><a href="#ermap">E-R图</a><br><a href="#version">查询数据库版本</a><br><a href="#commented">注释</a><br><a href="#values">变量赋值</a><br><a href="#time">T-SQL执行时间</a><br><a href="#content">查询包含执行文本的存储过程</a><br><a href="#triggers">查询当前数据库的所有触发器</a><br><a href="#specified">查看指定触发器或存储过程的内容或自定义函数</a><br><a href="#count">COUNT(*)查询优化</a><br><a href="#operators">比较操作符</a><br><a href="#unions">多表连接优化</a><br><a href="#wildcard">通配符</a><br><a href="#between">BETWEEN…AND</a><br><a href="#tips">编写T-SQL的小技巧</a><br><a href="#folwcontrol">流程控制语句</a><br><a href="#server">链接服务器</a><br><a href="#uniqueindex">聚集索引和非聚集索引</a>  </p>
 <hr>
 <p><a name="overview"></a></p>
 <h2 id="表概念"><a href="#表概念" class="headerlink" title="表概念"></a>表概念</h2><ul>
@@ -280,6 +280,16 @@
 <p><strong>注：</strong>通过链接服务器不能删除(including truncate)链接源服务器的任何对像  </p>
 <ul>
 <li>通过链接服务器可以对链接源服务器的表进行insert,updae,delete操作.<a href="http://www.cnblogs.com/xcloudbiz/articles/4923018.html" target="_blank" rel="noopener">http://www.cnblogs.com/xcloudbiz/articles/4923018.html</a>  </li>
+</ul>
+<hr>
+<p><a name="uniqueindex"></a></p>
+<h2 id="聚集索引和非聚集索引"><a href="#聚集索引和非聚集索引" class="headerlink" title="聚集索引和非聚集索引"></a>聚集索引和非聚集索引</h2><ul>
+<li>聚集索引一个表只能有一个，而非聚集索引一个表可以有多个  </li>
+<li>聚集索引存储记录是物理上连续存在的，而非聚集索引是逻辑上连续的，物理存储并不连续  </li>
+<li>聚集索引可以创建在任何一列的字段上，但非常不建议这样做  </li>
+<li>如果未使用UNIQUE属性创建唯一聚集索引，数据库引擎将向表自动添加一个四字节uniqueifer列，必要的时候，数据库引擎将向行自动添加一个uniqueifier值，使得每个键唯一。该列和；列值供内部使用，用户不可查看或访问  </li>
+<li>主键是在查询的时候定义到表记录的一行，而非聚集索引在查询范围的时候性能更好  </li>
+<li>索引是通过二叉树的形式进行描述的，聚集索引的叶子节点就是数据节点，而非聚集索引的叶子节点仍是索引节点，但该索引节点有一个执行最终数据的指针  </li>
 </ul>
 <hr>
 <p><a href="#top">返回顶部</a></p>
