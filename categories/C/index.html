@@ -1,172 +1,142 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <meta name="keywords" content="hexo, autumn" />
-    <title>
-        Emiqll
-    </title>
-    <!-- favicon -->
-    
-    <link rel="icon" href="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/favicon.ico" />
-     <link rel="stylesheet" href="/css/style.css">
-
-    <!-- highlight -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css" />
-    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
-    <script>
-        hljs.initHighlightingOnLoad()
-    </script>
-    <script src="https://cdn.jsdelivr.net/gh/frontendsophie/hexo-infinite-scroll@2.0.0/dist/main.js"></script>
-
-    <script>
-        infiniteScroll()
-
-        window.addEventListener('DOMContentLoaded', function () {
-            const [
-                mainTitle,
-                mobileMenu,
-                mobileMainTitle,
-                mobileMenuBtn,
-                ipadMenuBtn,
-                aside,
-                closeBtn,
-            ] = getEle(
-                '#main-title',
-                '.mobile-menu',
-                '.mobile-menu h3',
-                '.mobile-menu button',
-                '.ipad-menu',
-                'aside',
-                'aside .close',
-            )
-            const io = new IntersectionObserver(entries => {
-                if (entries[0].intersectionRatio <= 0) {
-                    mobileMainTitle.classList.remove('invisibile')
-                } else {
-                    mobileMainTitle.classList.add('invisibile')
-                }
-            })
-            io.observe(mainTitle)
-
-            clickToggleAside(mobileMenuBtn)
-            clickToggleAside(ipadMenuBtn)
-            clickToggleAside(closeBtn, false)
-
-            const isMenuVisible = window.getComputedStyle(mobileMenu).display !== 'none'
-            if (isMenuVisible) document.body.style.background = 'none'
-
-            function getEle(...args) {
-                return args.map(arg => document.querySelector(arg))
-            }
-
-            function clickToggleAside(btn, show = true) {
-                btn.addEventListener('click', function () {
-                    if (show) {
-                        aside.style.display = 'block'
-                    } else {
-                        aside.style.display = 'none'
-                    }
-                })
-            }
-        })
-    </script>
-</head>
-
-<body style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
-    <div class="container">
-        <header class="header">
-    <nav class="mobile-menu" style="background: url(https://cdn.jsdelivr.net/gh/frontendsophie/hexo-theme-autumn@1.0.0/source/img/button-bg.png) #f3f3f3">
-        <h3 class="invisibile">
-            <a href="/" class="logo">
-                Emiqll
-            </a>
-        </h3>
-        <button class="menu">menu</button>
-    </nav>
-
-    <button class="ipad-menu menu">menu</button>
-
-    <h1 class="title" id="main-title">
-        <a href="/" class="logo">
-            Emiqll
-        </a>
-    </h1>
-    <h2 class="desc">
-        认清生活的本质后，依然热爱生活
-    </h2>
-
-    <div class="links">
-        <ul>
-            
-            <li>
-                <a href="https://github.com/Emiqull" target="_blank" rel="noopener">
-                    Github
-                </a>
-            </li>
-            
-        </ul>
-    </div>
-</header>
-        <main class="main">
-            
-<section class="posts">
-    
-        <article class="post">
-            
-                <h4 class="post-cat">
-                    <a href="/categories/C/">
-                        C#
-                    </a>
-                </h4>
-                
-                    <h1 class="post-title">
-                        <a href="/2019/11/07/csharp-comparison/">
-                            C# 相等性比较
-                        </a>
-                    </h1>
-
-                    <ul class="post-date">
-                        <li>
-                            November 7, 2019
-                        </li>
-                        <li>
-                            Emiqull
-                        </li>
-                    </ul>
-                    
-                    <div class="post-content ">
-                        
-                            <a href="/2019/11/07/csharp-comparison/" class="more-link">Continue reading</a>
-                    </div>
-        </article>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         
-</section>
-
-        </main>
-        <aside class="aside">
-            <div class="close"></div>
-            <section class="aside-section">
-                
-    <h1>Categories</h1>
-
-    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C#</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/HexoBlog/">HexoBlog</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Advanced/">Microsoft SQL Server Advanced</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Basis/">Microsoft SQL Server Basis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microsoft-SQL-Server-Key-Words/">Microsoft SQL Server Key Words</a></li></ul>
-
-            </section>
-            <section class="aside-section">
-                
-    <h1>Archives</h1>
-
-    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/">2019</a></li></ul>
-
-
-            </section>
-            <section class="aside-section tag">
-                
-            </section>
-        </aside>
+        <title>category: C# | Emiqll</title>
+        
+        <link rel="alternate" href="/atom.xml" title="Emiqll" type="application/atom+xml">
+        
+        
+        <link rel="icon" href="//favicon.png">
+        
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/common.css">
+        <link rel="stylesheet" href="/css/markdown.css">
+    </head>
+    <body onscroll="scrollYListener()">
+        <div class="wrapper">
+            <div class="mobile_menu_btn">
+  <button id="mobile_menu_btn" class="c-hamburger c-hamburger--htx">
+  <span>toggle menu</span>
+  </button>
+</div>
+<div class="slide_menu">
+  <nav class="nav_scroll">
+    <ul class="clearfix">
+      
+      
+      <li class=""> <a href="/">Home</a> </li>
+      
+      
+      <li class=""> <a href="/archives">Archive</a> </li>
+      
+    </ul>
+  </nav>
+  <div class="social">
+    <ul class="clearfix">
+      
+      
+      <li> <a href="https://github.com/Emiqull" target="_blank"> <img src="/img/GitHub.png"> </a> </li>
+      
+      
+      
+      
+    </ul>
+  </div>
+  <div class="copyright">
+    &copy; 2019 Emiqll | Provided By  <a title="Emiqull" href="http://chengkang.me/" target="_blank">Emiqull</a>
+  </div>
+</div>
+<header>
+  <div class="mobile_navbar clearfix">
+    
+    <div class="logo">
+      <a href="/">Emiqll</a>
     </div>
-</body>
-
+    
+  </div>
+  <div class="row clearfix no_form">
+    <div class="logo">
+      <a href="/">Emiqll</a>
+    </div>
+    <nav class="nav_scroll">
+      <ul class="clearfix">
+      
+      
+      <li class=""> <a href="/">Home</a> </li>
+      
+      
+      <li class=""> <a href="/archives">Archive</a> </li>
+      
+      </ul>
+    </nav>
+  </div>
+</header>
+            <div class="section" id="Archive">
+    <h2 class="center">Archive</h2>
+    <div class="post-list">
+        
+        
+        
+        
+        
+        
+        
+        <h4>2019</h4>
+        
+        <p class="post-title"><span>Nov 7, 2019</span><a href="/2019/11/07/csharp-comparison/">C# 相等性比较</a></p>
+        
+    </div>
+</div>
+            <footer>
+	<div class="footer_wrap">
+		<div class="social">
+			<ul class="clearfix">
+				
+				
+				<li> <a href="https://github.com/Emiqull" target="_blank"> <img src="/img/GitHub.png"> </a> </li>
+				
+				
+				
+				
+			</ul>
+		</div>
+		<img src="/img/line.jpg">
+		<div class="copyright">
+			&copy; 2019 Emiqll | Provided By  <a title="Emiqull" href="http://chengkang.me/" target="_blank">Emiqull</a>
+		</div>
+	</div>
+</footer>
+        </div>
+        <script type="text/javascript">
+        function scrollYListener() {
+        var searchHeight = parseInt(getComputedStyle(document.getElementById("Search")).height)
+        var width = document.documentElement.clientWidth;
+        var supportPageOffset = window.pageXOffset !== undefined;
+        var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+        var scrollY = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+        if (scrollY >= searchHeight-10) {
+        document.getElementsByTagName('header')[0].style.backgroundColor = "#cd4b4b";
+        document.getElementsByClassName('logo')[0].style.backgroundColor = "#cd4b4b";
+        } else {
+        document.getElementsByTagName('header')[0].style.backgroundColor = "#4f8e8e";
+        document.getElementsByClassName('logo')[0].style.backgroundColor = "#4f8e8e";
+        }
+        }
+        var isMenuExpanded = false;
+        document.getElementById("mobile_menu_btn").onclick = function toggleMobileMenu() {
+        if (isMenuExpanded) {
+        document.getElementsByClassName('slide_menu')[0].className = "slide_menu";
+        } else {
+        document.getElementsByClassName('slide_menu')[0].className += " mobile_menu_active";
+        }
+        isMenuExpanded = !isMenuExpanded;
+        }
+        </script>
+        
+        
+    </body>
 </html>
