@@ -1,0 +1,284 @@
+/* root styles for the whole page */
+html {
+  /* base font size 18px */
+  font-size: 18px;
+  /* font family for the chinese characters */
+  font-family: 'Source Han Sans', 'Noto Sans CJK', serif;
+  /* line height for readability */
+  line-height: 1.6;
+  /* transition for smoothness */
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* styles for the body */
+body {
+  /* margin 1rem to the left and right for the whole page */
+  margin-left: 1rem;
+  margin-right: 1rem;
+  /* padding 1rem to the left and right of the whole page */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  /* shadowing for the whole page */
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+  /* background color */
+  background-color: #8dd3bd;
+  /* text color */
+  color: #020207;
+  /* 2rem indentation for the entire page */
+  text-indent: 2rem;
+  /* inherit the reset of the styles from the html */
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  transition: inherit;
+}
+
+/* styles for the hr element */
+hr {
+  /* 1rem margin */
+  margin: 0.25rem;
+  /* background color with usually used */
+  background-color: #3a3aaf;
+  /* color of the line */
+  color: #3a3aaf;
+  /* thickness of the line */
+  border-width: 1px;
+}
+
+/* highlight class for highlighting text */
+.highlight {
+  /* refined background color with transparency */
+  background-color: rgba(207, 164, 178, 0.6);
+  /* padding around all sides using rem units */
+  padding: 0.1rem 0.1rem;
+  /* rounds the corners using rem units */
+  border-radius: 0.1rem;
+  /* text color stands out against the background */
+  color: #020207;
+  /* adds a more prominent shadow using rem units */
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+  /* smooth transitions */
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* styles for the open and close quotes */
+.open-quote, .close-quote {
+  /* color for the quotes */
+  color: #ee310f;
+  /* font size for the quotes */
+  font-size: inherit;
+  /* bold font weight for emphasis */
+  font-weight: bold;
+  /* inline block for proper alignment */
+  display: inline-block;
+  /* minimal margin */
+  margin: 0;
+  /* minimal padding */
+  padding: 0;
+  /* consistent line height */
+  line-height: inherit;
+  /* smooth transitions */
+  transition: color 0.3s, font-size 0.3s;
+}
+
+/* styles for the span element */
+span {
+  /* no text indentation */
+  text-indent: 0;
+  /* left-align the text */
+  text-align: left;
+  /* inherit the font-releted styles from body */
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+/* styles for the base-tooltip class */
+.base-tooltip {
+  /* transparent background */
+  background-color: transparent;
+  /* highlight color for the special word */
+  color: #dd0909;
+  /* no padding */
+  padding: 0.1rem 0;
+  /* no underline */
+  text-decoration: none;
+  /* indicates interactivity */
+  cursor: help;
+  /* required for positioning the tooltip text */
+  position: relative;
+}
+
+/* styles for the tooltip::after pseudo-element */
+.base-tooltip::after {
+  /* background color for tooltip */
+  background-color: #f69e4b;
+  /* rounded corners */
+  border-radius: 5px;
+  /* start hidden */
+  display: none;
+  /* padding around the text */
+  padding: 0px 5px;
+  /* small space above tooltip */
+  margin-top: 1px;
+  /* normal font weight */
+  font-weight: normal;
+  /* font size */
+  font-size: 1rem;
+  /* text color for tooltip */
+  color: #56202b;
+  /* absolute positioning */
+  position: absolute;
+  /* position tooltip below the word */
+  top: 100%;
+  /* position tooltip to the left */
+  left: 0rem;
+  /* limit width to viewport */
+  max-width: 45vw;
+  /* fit content width */
+  width: max-content;
+  /* preserve whitespace */
+  white-space: pre-wrap;
+  /* allow words to break */
+  word-break: auto;
+  /* ensure tooltip is on top */
+  z-index: 999;
+  /* use data attribute for dynamic content */
+  content: attr(data-tooltip);
+  /* control transform with a variable */
+  transform: var(--tooltip-transform, translateX(0%));
+  /* include padding in width */
+  box-sizing: border-box;
+}
+
+/* styles for the tooltip active state */
+.tooltip.active::after {
+  /* show tooltip when active */
+  display: block;
+}
+
+/* styles for the poem-container class */
+.poem-container {
+  /* semi-transparent background */
+  background-color: rgba(110, 177, 180, 0.322);
+  /* padding only on the left */
+  padding-left: 2rem;
+  /* padding only on the right */
+  padding-right: 2rem;
+  /* rounded corners */
+  border-radius: 0.25rem;
+  /* box shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  /* indentation for the entire div element */
+  margin-left: 2rem;
+  /* text color */
+  color: #020207;
+  /* line height for readability */
+  line-height: inherit;
+  /* center-align the text */
+  text-align: center;
+  /* no text indentation */
+  text-indent: 0;
+  /* width set to fit content */
+  width: fit-content;
+  /* wrap text */
+  white-space: pre-wrap;
+  /* padding around the text */
+  padding-top: 0;
+}
+
+/* styles for the p inside poem-container class */
+.poem-container p {
+  /* no margin */
+  margin: 1rem 0;
+  /* no padding */
+  padding: 0 1rem;
+  /* no text indentation */
+  text-indent: 0;
+}
+
+/* styles for the tab-container class */
+.tab-container {
+  /* no border */
+  border: none;
+  /* smaller font size based on 18px base */
+  font-size: 0.875rem;
+  /* text color */
+  color: #00246B;
+  /* indicates interactivity */
+  cursor: help;
+  /* transparent background */
+  background-color: transparent;
+  /* no margin */
+  margin: 0;
+  /* padding at the bottom */
+  padding: 0;
+  /* smooth transitions */
+  transition: background-color 0.3s;
+  /* left-align the text */
+  text-align: left;
+  /* no text indentation */
+  text-indent: 2rem;
+}
+
+/* styles for the tab-title class */
+.tab-title {
+  /* cursor indicates interactivity */
+  cursor: help;
+  /* padding around the text */
+  padding: 0 0.5rem;
+  /* radius for rounded corners */
+  border-radius: 0.25rem 0.25rem;
+  /* inline block for proper alignment */
+  display: inline-block;
+  /* minimal margin */
+  margin-right: 0.1rem;
+  /* no text indentation */
+  text-indent: 0;
+  /* shadowing for the tab container */
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+}
+
+/* styles for the p inside tab-title class */
+.tab-title p {
+  /* no margin */
+  margin: 0;
+  /* no padding */
+  padding: 0;
+  /* no text indentation */
+  text-indent: 0;
+}
+
+/* styles for the tab-content class */
+.tab-content {
+  /* hidden by default */
+  display: none;
+  /* no border */
+  border: 1px none transparent;
+  /* minimal padding */
+  padding: 1px;
+  /* margin 2rem to the left */
+  margin-left: 2rem;
+  /* radius for rounded corners */
+  border-radius: 0.25rem 0.25rem;
+  /* shadowing for the tab container */
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+}
+
+/* styles for the p inside tab-content class */
+.tab-content p {
+  /* no margin */
+  margin: 0;
+  /* no padding */
+  padding-top: 0.25rem;
+  /* 2rem indentation */
+  text-indent: 1rem;
+}
+
+/* styles for the tab-content.active class */
+.active-title {
+  /* normal font weight */
+  font-weight: normal;
+  /* bottom border for active tab */
+  border-bottom: 2px solid #bb2626;
+}
