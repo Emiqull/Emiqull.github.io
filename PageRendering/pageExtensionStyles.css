@@ -34,6 +34,7 @@ p {
 hr {
   margin: 0.25rem 2rem;
   border-width: 1px;
+  border-color: lightseagreen;
 }
 
 /* highlight class for highlighting text */
