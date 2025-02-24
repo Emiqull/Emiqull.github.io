@@ -1,7 +1,8 @@
 /* root styles for the whole page */
 html {
   font-size: 18px;
-  font-family: 'Noto Serif SC', 'Songti SC', 'Source Han Serif SC', serif;
+  /* font-family: 'Noto Serif SC', 'Songti SC', 'Source Han Serif SC', serif; */
+  font-family: 'Microsoft Yahei', 'PingFang SC', 'Noto Serif SC', 'Songti SC', 'Source Han Serif SC', serif;
   line-height: 1.6;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
