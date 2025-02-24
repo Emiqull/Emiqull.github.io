@@ -24,7 +24,7 @@ function updateTabReferences() {
                 const tabTitle = document.createElement('div');
                 tabTitle.classList.add(TAB_TITLE_CLASS);
                 const tabTitleParagraph = document.createElement('p');
-                tabTitleParagraph.textContent = reference.summary;
+                tabTitleParagraph.textContent = `${reference.summary}✤`;
                 tabTitle.appendChild(tabTitleParagraph);
                 tabTitlesContainer.appendChild(tabTitle);
 
@@ -78,6 +78,22 @@ function addTabEventListeners() {
                 tabContentElement.style.display = 'block';
                 tabTitleElement.classList.add(ACTIVE_TITLE_CLASS);
                 activeTabIndex = tabIndex;
+
+                // Query all elements with the .tooltip class within the tabContentElement
+                const tooltips = tabContentElement.querySelectorAll('.tooltip');
+                // Iterate over each tooltip element
+                tooltips.forEach(tooltip => {
+                    // Measure the tooltip's dimensions
+                    const tooltipRect = tooltip.getBoundingClientRect();
+                    const viewportWidth = window.innerWidth;
+                
+                    // Adjust the position if the tooltip exceeds half the viewport width
+                    if (tooltipRect.right > viewportWidth / 2) {
+                        tooltip.style.setProperty('--tooltip-transform', 'translateX(calc(-100% + 1rem))');
+                    } else {
+                        tooltip.style.setProperty('--tooltip-transform', 'translateX(0%)');
+                    }
+                });
             }
         }
     });
@@ -85,6 +101,7 @@ function addTabEventListeners() {
 
 function highlightQuotesAcrossParagraphsSkippingTabs() {
     const paragraphs = document.querySelectorAll('p');
+    var openQuoteRight = 0;
     let openQuote = false;
 
     paragraphs.forEach(p => {
@@ -102,7 +119,7 @@ function highlightQuotesAcrossParagraphsSkippingTabs() {
         }
 
         if (openQuote) {
-            p.style.textIndent = `${(2 * 18) + 9}px`; // Approximately value of 2rem + half of the quote width
+            p.style.textIndent = `${openQuoteRight}px`;
             content = `<span class="highlight">${content}</span>`;
         }
 
@@ -113,10 +130,20 @@ function highlightQuotesAcrossParagraphsSkippingTabs() {
             // Handle open quote start
             openQuote = true;
             content = content.replace(/“([^”]*)/, '“<span class="highlight">$1');
+
+            // Get the index of the open quote symbol within the content
+            const openQuoteIndex = content.indexOf('“');
+            // Get the width between the start of p and open quote symbol in characters
+            const beforeOpenQuoteWidth = content.slice(0, openQuoteIndex).length;
+            // Convert the width to pixels (1rem = 18px), and add half the quote symbol width (9px)
+            const beforeOpenQuoteWidthInPixels = beforeOpenQuoteWidth * 18;
+            openQuoteRight = beforeOpenQuoteWidthInPixels + (2 * 18) + 9;
+
         } else if (content.includes('”')) {
             // Handle closing quote end
             openQuote = false;
             content = content.replace(/([^“]*)”/, '$1</span>”');
+            openQuoteRight = 0;
         }
 
         p.innerHTML = content;
@@ -221,7 +248,7 @@ function adjustTooltipPosition() {
         // Adjust the position if the tooltip exceeds the viewport width
         if (tooltipRect.right > viewportWidth / 2) {
             element.style.setProperty('--tooltip-transform', 'translateX(calc(-100% + 1rem))');
-        } else if (tooltipRect.left < 0) {
+        } else {
             element.style.setProperty('--tooltip-transform', 'translateX(0%)');
         }
     });
@@ -315,8 +342,11 @@ function addTooltipEvents() {
 
 function wrapPoemLinesInParagraphs() {
     document.querySelectorAll('.poem-container').forEach(poemContainer => {
-        const lines = poemContainer.innerHTML.split('\n').filter(line => line.trim()); // Split by new lines and filter out empty lines
-        const paragraphLines = lines.map(line => `<p>${line.trim()}</p>`).join(''); // Wrap each line in <p> and join them
-        poemContainer.innerHTML = paragraphLines; // Set the innerHTML of the poemContainer to the new content
+        // Split by new lines and filter out empty lines
+        const lines = poemContainer.innerHTML.split('\n').filter(line => line.trim());
+        // Wrap each line in <p> and join them
+        const paragraphLines = lines.map(line => `<p>${line.trim()}</p>`).join('');
+        // Set the innerHTML of the poemContainer to the new content
+        poemContainer.innerHTML = paragraphLines;
     });
 }
