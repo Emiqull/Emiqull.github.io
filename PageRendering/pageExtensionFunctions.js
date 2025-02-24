@@ -137,7 +137,7 @@ function highlightQuotesAcrossParagraphsSkippingTabs() {
             const beforeOpenQuoteWidth = content.slice(0, openQuoteIndex).length;
             // Convert the width to pixels (1rem = 18px), and add half the quote symbol width (9px)
             const beforeOpenQuoteWidthInPixels = beforeOpenQuoteWidth * 18;
-            openQuoteRight = beforeOpenQuoteWidthInPixels + (2 * 18) + 9;
+            openQuoteRight = beforeOpenQuoteWidthInPixels + (2 * 18) + (9 * 2);
 
         } else if (content.includes('”')) {
             // Handle closing quote end
