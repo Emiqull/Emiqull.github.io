@@ -1,9 +1,8 @@
 /* root styles for the whole page */
 html {
   font-size: 18px;
-  /* font-family: 'Noto Serif SC', 'Songti SC', 'Source Han Serif SC', serif; */
   font-family: 'Microsoft Yahei', 'PingFang SC', 'Noto Serif SC', 'Songti SC', 'Source Han Serif SC', serif;
-  line-height: 1.6;
+  line-height: 1.8;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
@@ -34,14 +33,14 @@ p {
 hr {
   margin: 0.25rem 2rem;
   border-width: 1px;
-  border-color: lightseagreen;
+  border-color: darkslategrey
 }
 
 /* highlight class for highlighting text */
 .highlight {
   background-color: rgba(207, 164, 178, 0.6);
-  padding: 0.1rem 0.1rem;
-  border-radius: 0.1rem;
+  padding: 0.01rem 0.1rem;
+  border-radius: 0.2rem;
   color: #020207;
   box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
   transition: background-color 0.3s, box-shadow 0.3s;
@@ -196,11 +195,20 @@ span {
 
 /* styles for the tab-content.active class */
 a {
+  text-indent: 4rem;
   text-decoration: none;
-  color: inherit;
+  color: #00246B;
+  font-weight: bold;
+  transition: color 0.3s;
 }
 
 /* styles for the a:hover class */
 a:hover {
   cursor: pointer;
+  text-decoration: none;
+  color: #bb2626;
+}
+
+img {
+  margin-left: 4rem;
 }
