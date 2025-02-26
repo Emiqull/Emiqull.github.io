@@ -71,7 +71,7 @@ span {
 .base-tooltip {
   background-color: transparent;
   color: #dd0909;
-  padding: 0.1rem 0;
+  padding: 0rem;
   text-decoration: none;
   cursor: help;
   position: relative;
@@ -80,10 +80,10 @@ span {
 /* styles for the tooltip::after pseudo-element */
 .base-tooltip::after {
   background-color: #f69e4b;
-  border-radius: 5px;
+  border-radius: 2px;
   display: none;
-  padding: 0px 5px;
-  margin-top: 1px;
+  padding: 1px 2px;
+  margin-top: 0px;
   font-weight: normal;
   font-size: 1rem;
   color: #56202b;
@@ -193,13 +193,19 @@ span {
   border-bottom: 2px solid #bb2626;
 }
 
+.links {
+  text-indent: 0%;
+  display: flex;
+  justify-content: space-between;
+}
+
 /* styles for the tab-content.active class */
 a {
-  text-indent: 4rem;
   text-decoration: none;
   color: #00246B;
   font-weight: bold;
   transition: color 0.3s;
+  text-wrap: none;
 }
 
 /* styles for the a:hover class */
