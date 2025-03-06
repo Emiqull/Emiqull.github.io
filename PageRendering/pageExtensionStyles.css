@@ -206,6 +206,8 @@ a {
   font-weight: bold;
   transition: color 0.3s;
   text-wrap: none;
+  text-align: center;
+  text-indent: 0;
 }
 
 /* styles for the a:hover class */
@@ -216,5 +218,8 @@ a:hover {
 }
 
 img {
-  margin-left: 4rem;
+  text-indent: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
