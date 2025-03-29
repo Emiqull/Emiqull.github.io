@@ -34,6 +34,20 @@ function updateTabReferences() {
                 tabContent.id = tabId;
                 tabContent.innerHTML = reference.paragraphs.map(paragraph => `<p>${paragraph}</p>`).join('');
                 tabContentsContainer.appendChild(tabContent);
+
+                // if reference.image is exists, add it to the tab content.
+                if (reference.images) {
+
+                    // iterate over each image in the reference
+                    reference.images.forEach(image => {
+                        const imageElement = document.createElement('img');
+                        imageElement.src = image;
+                        imageElement.style.width = '15vw';
+                        imageElement.style.margin = '0.1rem';
+                        imageElement.style.verticalAlign = 'middle';
+                        tabContent.appendChild(imageElement);
+                    });
+                }
             }
         });
 
@@ -137,7 +151,7 @@ function highlightQuotesAcrossParagraphsSkippingTabs() {
             const beforeOpenQuoteWidth = content.slice(0, openQuoteIndex).length;
             // Convert the width to pixels (1rem = 18px), and add half the quote symbol width (9px)
             const beforeOpenQuoteWidthInPixels = beforeOpenQuoteWidth * 18;
-            openQuoteRight = beforeOpenQuoteWidthInPixels + (2 * 18) + (9 * 2);
+            openQuoteRight = beforeOpenQuoteWidthInPixels + (2 * 18) + 18;//+ 9;
 
         } else if (content.includes('”')) {
             // Handle closing quote end
@@ -342,11 +356,8 @@ function addTooltipEvents() {
 
 function wrapPoemLinesInParagraphs() {
     document.querySelectorAll('.poem-container').forEach(poemContainer => {
-        // Split by new lines and filter out empty lines
         const lines = poemContainer.innerHTML.split('\n').filter(line => line.trim());
-        // Wrap each line in <p> and join them
         const paragraphLines = lines.map(line => `<p>${line.trim()}</p>`).join('');
-        // Set the innerHTML of the poemContainer to the new content
         poemContainer.innerHTML = paragraphLines;
     });
 }
