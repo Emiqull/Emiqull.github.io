@@ -1,0 +1,182 @@
+html {
+  box-sizing: border-box;
+  font-family: 'Microsoft YaHei', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Serif SC', serif;
+  font-size: 18px;
+  line-height: 1.7;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+body {
+  margin: 2rem 1rem;
+  background-color: #FDF6E3;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+  color: #073642;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-indent: 2rem;
+  transition: inherit;
+}
+
+hr {
+  border-radius: 0.25rem;
+  border-width: 2px;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+  margin: 1rem 2rem;
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+.highlight {
+  background-color: #FFEDDF;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+  color: #073642;
+  padding: 0 0.25rem;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.open-quote, .close-quote {
+  color: #FC4001;
+  font-weight: bold;
+}
+
+span {
+  text-indent: 0;
+}
+
+.base-tooltip {
+  color: #FC4001;
+  cursor: help;
+  position: relative;
+}
+
+.base-tooltip::after {
+  background-color: #FFEBCD;
+  border-radius: 0.25rem;
+  border-style: solid;
+  border-width: 1px;
+  color: #5C4033;
+  content: attr(data-tooltip);
+  display: none;
+  font-size: 0.875rem;
+  font-weight: normal;
+  left: 0;
+  line-height: 1.25rem;
+  margin-top: 1px;
+  max-width: 40vw;
+  padding: 0 0.25rem;
+  position: absolute;
+  top: 100%;
+  transform: var(--tooltip-transform, translateX(0%));
+  white-space: pre-wrap;
+  width: max-content;
+  word-break: auto;
+  z-index: 999;
+}
+
+.tooltip.active::after {
+  display: block;
+}
+
+.poem-container {
+  background-color: #CDEFD7;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  margin: 0 2rem;
+  padding: 0 2rem;
+  text-align: left;
+  text-indent: 0;
+  white-space: pre-wrap;
+  width: fit-content;
+}
+
+.poem-container .tab-container {
+  margin: 0 -2rem;
+}
+
+.poem-container .tab-container .tab-title, .tab-content {
+  background-color: #FDF6E3;
+}
+
+.tab-container {
+  border-radius: 0.25rem;
+  color: #A62A01;
+  cursor: help;
+  font-size: 0.875rem;
+  margin: -0.25rem 2rem -0.25rem 2rem;
+}
+
+.tab-titles {
+  text-indent: 0rem;
+}
+
+.tab-title {
+  border-radius: 0.25rem;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+  cursor: help;
+  display: inline-block;
+  margin: 0 0.25rem 0 0;
+  white-space: pre-wrap;
+}
+
+.tab-title p {
+  margin: 0;
+  padding: 0 0.25rem;
+  text-indent: 0;
+}
+
+.tab-content {
+  border-radius: 0.25rem;
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.1rem 0.2rem rgba(0, 0, 0, 0.06);
+  display: none;
+  margin: -0.5rem 0 0.5rem 0;
+  width: fit-content;
+}
+
+.tab-content p {
+  padding: 0 1rem;
+  text-indent: 0rem;
+}
+
+.active-title {
+  border-bottom: 2px solid #bb2626;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 90vw;
+  text-indent: 0%;
+}
+
+a {
+  color: #00796E;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-indent: 0;
+  transition: color 0.3s;
+}
+
+a:hover {
+  cursor: pointer;
+  color: #bb2626;
+  text-decoration: none;
+  text-indent: 0;
+}
+
+img {
+  display: block;
+  margin: 1rem auto;
+}
+
+h1 {
+  text-align: center;
+  text-indent: 0;
+}

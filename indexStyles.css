@@ -146,30 +146,16 @@ span {
   border-bottom: 2px solid #bb2626;
 }
 
-.links {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: 90vw;
-  text-indent: 0%;
-}
-
 a {
-  color: #00796E;
-  font-size: 1.25rem;
-  font-weight: bold;
-  text-align: center;
   text-decoration: none;
+  color: #00796E;
+  font-weight: bold;
+  font-size: 1.5rem;
   transition: color 0.3s;
 }
 
 a:hover {
   cursor: pointer;
-  color: #bb2626;
   text-decoration: none;
-}
-
-img {
-  display: block;
-  margin: 1rem auto;
+  color: #bb2626;
 }
