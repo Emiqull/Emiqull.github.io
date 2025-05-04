@@ -151,8 +151,8 @@ function highlightQuotesAcrossParagraphsSkippingTabs() {
             const beforeOpenQuoteWidth = content.slice(0, openQuoteIndex).length;
             // Convert the width to pixels (1rem = 18px), and add half the quote symbol width (9px)
             const beforeOpenQuoteWidthInPixels = beforeOpenQuoteWidth * 18;
-            openQuoteRight = beforeOpenQuoteWidthInPixels + (2 * 18) + 18;//+ 9;
 
+            openQuoteRight = beforeOpenQuoteWidthInPixels + (2 * 18) + 18;// 18 or 9
         } else if (content.includes('”')) {
             // Handle closing quote end
             openQuote = false;
@@ -177,10 +177,10 @@ function highlightQuoteSymbols() {
             switch (match) {
                 case '“':
                 case '’':
-                    return `<span class="${OPEN_QUOTE_CLASS}">${match}</span>`;
+                    return `<span style="width:1rem" class="${OPEN_QUOTE_CLASS}">${match}</span>`;
                 case '”':
                 case '‘':
-                    return `<span class="${CLOSE_QUOTE_CLASS}">${match}</span>`;
+                    return `<span style="width:1rem" class="${CLOSE_QUOTE_CLASS}">${match}</span>`;
                 default:
                     return match;
             }
