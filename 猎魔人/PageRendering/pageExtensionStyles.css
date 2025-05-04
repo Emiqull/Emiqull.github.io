@@ -1,6 +1,6 @@
 html {
   box-sizing: border-box;
-  font-family: 'Microsoft YaHei', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Serif SC', serif;
+  font-family: '微软雅黑', 'Microsoft YaHei', 'Noto Serif SC', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Serif SC', serif;
   font-size: 18px;
   line-height: 1.7;
   transition: background-color 0.3s, box-shadow 0.3s;
