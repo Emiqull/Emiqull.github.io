@@ -19,6 +19,21 @@ body {
   transition: inherit;
 }
 
+.sub-title {
+  color: #00796E;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-indent: 0;
+  transition: color 0.3s;
+  align-items: center;
+}
+
+.sub-title a {
+  margin: 0rem 0.5rem;
+}
+
 hr {
   border-radius: 0.25rem;
   border-width: 2px;
