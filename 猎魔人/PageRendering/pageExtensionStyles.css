@@ -42,7 +42,7 @@ p {
 .open-quote, .close-quote {
   color: #FC4001;
   font-weight: bold;
-  font-family: monospace;
+  width: 1rem;
 }
 
 span {
