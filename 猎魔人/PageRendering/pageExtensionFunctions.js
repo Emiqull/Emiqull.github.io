@@ -177,10 +177,10 @@ function highlightQuoteSymbols() {
             switch (match) {
                 case '“':
                 case '’':
-                    return `<span style="display: inline-block;width:1rem" class="${OPEN_QUOTE_CLASS}">${match}</span>`;
+                    return `<span style="text-align: right;font-family: monospace;display: inline-block;width:1rem" class="${OPEN_QUOTE_CLASS}">${match}</span>`;
                 case '”':
                 case '‘':
-                    return `<span style="display: inline-block;width:1rem" class="${CLOSE_QUOTE_CLASS}">${match}</span>`;
+                    return `<span style="text-align: left;font-family: monospace;display: inline-block;width:1rem" class="${CLOSE_QUOTE_CLASS}">${match}</span>`;
                 default:
                     return match;
             }
