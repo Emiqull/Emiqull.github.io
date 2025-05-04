@@ -28,7 +28,10 @@ hr {
 
 p {
   margin: 0.5rem 0;
-  text-rendering: geometricPrecision;
+}
+
+.open-quote, .close-quote {
+  font-family: monospace;
 }
 
 .highlight {
