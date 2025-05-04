@@ -28,6 +28,7 @@ hr {
 
 p {
   margin: 0.5rem 0;
+  text-rendering: geometricPrecision;
 }
 
 .highlight {
